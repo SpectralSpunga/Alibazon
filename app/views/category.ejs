@@ -10,27 +10,27 @@
 
       <div id="navbar">
           <a href='#'>Home</a>
-          <% links.forEach(function(elem){ %>
+          <% obj.links.forEach(function(elem){ %>
             <a href='/category/<%= elem.link %>'><%= elem.ap %></a>
         <% }); %>
       </div>
 
       <main>
-        <h2><%= mainCategory %></h2>
-        <p><%= categoryDesc %></p>
+        <h2><%= obj.mainCategory %></h2>
+        <p><%= obj.categoryDesc %></p>
 
-        <% mens.forEach(function(elem){ %>
+        <% obj.mens.forEach(function(elem){ %>
             <h3><%= elem.name %></h3>
             <img src="/images/<%= elem.image %>" alt="<%= elem.id %>">
             <p><%= elem.page_description %></p>
 
-            <% if(mainCategory == "Mens" || mainCategory == 'Womens') {%>
-              <a href="/category/<%= mens[1].parent_category_id %>/<%= elem.name.toLowerCase() %>">
-                <button>View categories</button>
+            <% if(obj.mainCategory == "Mens" || obj.mainCategory == 'Womens') {%>
+              <a href="/category/<%= obj.mens[1].parent_category_id %>/<%= elem.name.toLowerCase() %>">
+                <button>VIEW CATEGORIES</button>
               </a>
             <% } else {%>
               <a href="/products/<%= elem.id %>">
-                <button>View products</button>
+                <button>VIEW PRODUCTS</button>
               </a>
             <% } %>
             <hr>

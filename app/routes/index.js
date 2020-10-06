@@ -4,9 +4,9 @@ module.exports = function(app) {
         res.send('Welcome to OSF Academy Backend Starter Kit. Have Fun!')
     });
 
-    app.use('/users', require('./UserRoutes'));
     // You can add others app.use with other route files
     app.use(require('./category'))
+    app.use(require('./productsCatalog'))
 
     
     // fallthrough error handler
