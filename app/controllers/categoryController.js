@@ -1,70 +1,100 @@
 const https = require('https');
+const secretKey = "%242a%2408%24STOLShNCDYZndkbNStJm5.FUBCS3DXqYlPZ1GZMWun9XGrj7yYnZ2";
+const API = "https://osf-digital-backend-academy.herokuapp.com/api";
 
-function homepageMens(req, res, next){
+function categoryMens(req, res, next){
     let resultStr = "";
+    let resultStrRoot = "";
     let result = [];
-    let regMensSub = /^mens-\w+$/;
-    let mens = [];
+    let resultRoot = [];
     let mainCategory = "";
     let categoryDesc = ''
 
-    https.get('https://osf-digital-backend-academy.herokuapp.com/api/categories?secretKey=%242a%2408%24STOLShNCDYZndkbNStJm5.FUBCS3DXqYlPZ1GZMWun9XGrj7yYnZ2', response=>{
+    https.get(`${API}/categories/parent/mens?secretKey=${secretKey}`, response=>{
         response.on('data', data=>{
             resultStr += data.toString();
         })
         response.on('end', ()=>{
             result = JSON.parse(resultStr);
 
-            result.forEach(elem => {
-                let matMens = elem.id.match(regMensSub);
+            https.get(`${API}/categories/parent/root?secretKey=${secretKey}`, response2=>{
+                response2.on('data', data=>{
+                    resultStrRoot += data.toString();
+                })
+                response2.on('end', ()=>{
+                    resultRoot = JSON.parse(resultStrRoot);
+        
+                    resultRoot.forEach(elem=>{
+                        if(elem.name === 'Mens'){
+                            mainCategory = elem.name;
+                            categoryDesc = elem.page_description;
+                        }
+                    })
 
-                if(matMens){
-                    elem.image = 'images/' + elem.image;
-                    mens.push(elem);
-                }
-                if(elem.parent_category_id === 'root' && elem.name === 'Mens'){
-                    categoryDesc = elem.page_description
-                    mainCategory = elem.name;
-                }
-            });
-
-            return res.render('category', {mens, mainCategory, categoryDesc})
+                    return res.render('category', 
+                    {
+                        mens: result, 
+                        mainCategory, 
+                        categoryDesc,
+                        links : [
+                            {
+                                link: 'mens',
+                                ap: 'Mens'
+                            }
+                        ]
+                    })
+                })
+            })
         })
     })
 }
 
-function homepageWomens(req, res, next){
+function categoryWomens(req, res, next){
     let resultStr = "";
+    let resultStrRoot = "";
     let result = [];
-    let regWomensSub = /^womens-\w+$/;
-    let womens = [];
+    let resultRoot = [];
     let mainCategory = "";
-    let categoryDesc = ''
+    let categoryDesc = '';
 
-    https.get('https://osf-digital-backend-academy.herokuapp.com/api/categories?secretKey=%242a%2408%24STOLShNCDYZndkbNStJm5.FUBCS3DXqYlPZ1GZMWun9XGrj7yYnZ2', response=>{
+    https.get(`${API}/categories/parent/womens?secretKey=${secretKey}`, response=>{
         response.on('data', data=>{
             resultStr += data.toString();
         })
         response.on('end', ()=>{
             result = JSON.parse(resultStr);
 
-            result.forEach(elem => {
-                let matWomens = elem.id.match(regWomensSub);
+            https.get(`${API}/categories/parent/root?secretKey=${secretKey}`, response2=>{
+                response2.on('data', data=>{
+                    resultStrRoot += data.toString();
+                })
+                response2.on('end', ()=>{
+                    resultRoot = JSON.parse(resultStrRoot);
+        
+                    resultRoot.forEach(elem=>{
+                        if(elem.name === 'Womens'){
+                            mainCategory = elem.name;
+                            categoryDesc = elem.page_description;
+                        }
+                    })
 
-                if(matWomens){
-                    elem.image = 'images/' + elem.image;
-                    womens.push(elem);
-                }
-                if(elem.parent_category_id === 'root' && elem.name === 'Womens'){
-                    categoryDesc = elem.page_description
-                    mainCategory = elem.name;
-                }
-            });
-
-            return res.render('category', {mens: womens, mainCategory, categoryDesc})
+                    return res.render('category', 
+                    {
+                        mens: result, 
+                        mainCategory, 
+                        categoryDesc,
+                        links : [
+                            {
+                                link: 'womens',
+                                ap: 'Womens'
+                            }
+                        ]
+                    })
+                })
+            })
         })
     })
 }
 
-module.exports = { homepageMens, homepageWomens }
+module.exports = { categoryMens, categoryWomens }
   
