@@ -3,16 +3,9 @@
   <head lang="en">
     <title>Products</title>
     <link rel='stylesheet' type='text/css' href='/stylesheets/style.css' />
-    <script scr="../controllers/homepageControlles.js"></script>
   </head>
   <body>
       <%- include('./header') %>
-    <div id="navbar">
-        <a href='#'>Home</a>
-        <% links.forEach(function(elem){ %>
-            <a href='<%= elem.link %>'><%= elem.ap %></a>
-        <% }); %>
-    </div>
 
       <main class='grid-main'>
         <% result.forEach(function(elem){ %>
