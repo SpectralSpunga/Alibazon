@@ -7,6 +7,12 @@ async function productsDataLoader(subsubCategory){
     return obj.data;
 }
 
+async function productPageLoader(productID){
+    let obj = await axios.get(`${API}/products/product_search?id=${productID}&secretKey=${secretKey}`);
+    return obj.data;
+}
+
 module.exports = {
-    productsDataLoader
+    productsDataLoader,
+    productPageLoader
 }

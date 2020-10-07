@@ -7,6 +7,7 @@ module.exports = function(app) {
     // You can add others app.use with other route files
     app.use(require('./category'))
     app.use(require('./productsCatalog'))
+    app.use(require('./productPage'))
 
     
     // fallthrough error handler

@@ -8,13 +8,6 @@
   <body>
       <%- include('./header') %>
 
-      <div id="navbar">
-          <a href='#'>Home</a>
-          <% obj.links.forEach(function(elem){ %>
-            <a href='/category/<%= elem.link %>'><%= elem.ap %></a>
-        <% }); %>
-      </div>
-
       <main>
         <h2><%= obj.mainCategory %></h2>
         <p><%= obj.categoryDesc %></p>
