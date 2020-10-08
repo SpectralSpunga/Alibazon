@@ -1,0 +1,148 @@
+header{
+  background-color: rgb(184, 110, 0);
+  margin: 0px;
+  color: cornsilk;
+}
+
+#header{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin:auto;
+  max-width: 800px;
+  width: 90%;
+}
+
+.nav-a{
+  text-decoration: none;
+  color: rgb(0, 119, 255);
+}
+
+.nav-a:hover{
+  color: rgb(0, 50, 107);
+}
+
+.nav-aa{
+  text-decoration: none;
+  color: rgb(0, 119, 255);
+}
+
+.nav-aa:hover{
+  color: rgb(0, 50, 107);
+}
+
+.nav-a:before{
+  padding: 4px;
+  color: black;
+  content: "/\00a0";
+}
+
+hr{
+  width: 800px;
+}
+
+.category-btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 150px;
+}
+
+#navbar{
+  margin:auto;
+  max-width: 800px;
+  width: 90%;
+}
+
+body{
+  margin: 0px;
+}
+
+h1{
+  box-sizing: border-box;
+  justify-self: start;
+  margin: 5px;
+}
+
+main{
+  margin: auto;
+  max-width: 800px;
+  width: 90%;
+}
+
+footer{
+  text-align: center;
+  margin: 10px;
+}
+
+.grid-main{
+  width: 800px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 390px);
+  grid-template-rows: auto;
+  grid-gap: 20px;
+}
+
+.product-div{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding:10px;
+  box-shadow: 5px 5px 5px rgb(161, 161, 161);
+  border-radius: 5px;
+  border: 1px solid rgb(216, 216, 216);
+}
+
+.product-name{
+  margin:0px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.product-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.product-img{
+  max-width: 35%;
+  height: auto;
+}
+
+.product-imgL{
+  max-width: 100%;
+  height: auto;
+}
+
+.product-text{
+  display: flex;
+  flex-direction: column;;
+  justify-content: flex-start;
+}
+
+.product-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.product-page{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding:10px;
+  margin-top: 50px;
+  box-shadow: 5px 5px 5px rgb(161, 161, 161);
+  border-radius: 5px;
+  border: 1px solid rgb(216, 216, 216);
+}
+
+
+@media(max-width: 800px){
+  .grid-main{
+    width: 390px;
+    grid-template-columns: repeat(1, 390px);
+  }
+}
