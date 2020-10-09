@@ -3,9 +3,8 @@ const Helper = require('../helpers/productsDataLoader')
 async function productsCatalog(req, res, next){
     let requestURL = "primary_category_id=" + req.params.subsubCategory;
     let obj = await Helper.productsDataLoader(requestURL)
-    if(obj.err){
-        res.json({error: obj.err.message})
-    }
+    if(obj instanceof Error) return res.render('NotFound');
+
     let result = obj.data;
     //converts subsubCategory like 'mens-clothing-jackets' to array ['mens', 'clothing', 'jackets']
     let str = req.params.subsubCategory.split('-')
@@ -40,9 +39,8 @@ async function productsCatalog(req, res, next){
 async function productsPage(req, res, next){
     let requestURL = "id=" + req.params.productID;
     let obj = await Helper.productsDataLoader(requestURL);
-    if(obj.err){
-        res.json({error: obj.err.message})
-    }
+    if(obj instanceof Error) return res.render('NotFound');
+    
     let result = obj.data;
     let str = req.params.subsubCategory.split('-')
 

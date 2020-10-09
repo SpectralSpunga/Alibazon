@@ -1,6 +1,5 @@
 const axios = require('axios');
-const secretKey = "%242a%2408%24STOLShNCDYZndkbNStJm5.FUBCS3DXqYlPZ1GZMWun9XGrj7yYnZ2";
-const API = "https://osf-digital-backend-academy.herokuapp.com/api";
+const { secretKey, API } = require('../config').config;
 
 async function categoryDataLoader(category){
     try{
