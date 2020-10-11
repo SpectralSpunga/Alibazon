@@ -1,25 +1,46 @@
-const Helper = require('../helpers/categoryDataLoader')
+const Service = require('../services/categoryService')
 
 async function category(req, res, next){
-    let obj = await Helper.categoryDataLoader(req.params.category);
-    if(obj instanceof Error) return res.render('NotFound');
+    let obj = await Service.categoryDataLoader(req.params.category);
+    if(obj instanceof Error) return res.render('NotFound', { links: [{ap: "NotFound"}]});
 
-    obj.links = [{ link: req.params.category, ap: obj.mainCategory }]
+    let links = [{ link: req.params.category, ap: obj.mainCategory }]
+    let user = "none";
+    if(req.cookies.user.user) user = req.cookies.user.user.name;
     
-    return res.render('category',{ obj, links: obj.links })
+    return res.render('category',
+    { 
+        obj: obj.data, 
+        links, 
+        category: obj.mainCategory, 
+        description: obj.categoryDesc, 
+        title: obj.title, 
+        user 
+    })
 }
 
 async function subCategory(req, res, next){
     let { category, subCategory } = req.params;
     let request = category + "-" + subCategory;
-    let obj = await Helper.categoryDataLoader(request);
-    if(obj instanceof Error) return res.render('NotFound');
+    
+    let obj = await Service.categoryDataLoader(request);
+    if(obj instanceof Error) return res.render('NotFound', { links: [{ap: "NotFound"}]});
 
     let ap = category.charAt(0).toUpperCase() + category.slice(1);
 
-    obj.links = [{ link: "/category/" + category, ap }, { link: '', ap: obj.mainCategory }]
+    let links = [{ link: "/category/" + category, ap }, { link: '', ap: obj.mainCategory }];
+    let user = "none";
+    if(req.cookies.user.user) user = req.cookies.user.user.name;
     
-    return res.render('category',{ obj, links: obj.links })
+    return res.render('category',
+    { 
+        obj: obj.data, 
+        links, 
+        category: obj.mainCategory, 
+        description: obj.categoryDesc, 
+        title: obj.title, 
+        user 
+    })
 }
 
 module.exports = {

@@ -1,0 +1,45 @@
+main{
+    max-width: 800px;
+    width: 90%;
+    margin-top: 20px;
+    margin: auto;
+}
+
+form[method='post']{
+    margin: auto;
+    margin-top: 40px;
+    width: 400px;
+    color: white;
+}
+  
+form[method="post"] input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding:5px;
+}
+  
+form[method="post"] button{
+    margin-top: 10px;
+    border: none;
+    background-color: rgb(57, 179, 0);
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+}
+  
+h2{
+    text-align: center;
+    margin: 5px;
+}
+  
+#auth{
+    border-radius: 5px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(90, 20, 220);
+    padding: 20px;
+}

@@ -1,12 +1,12 @@
-const app = require('express')();
+const express = require('express')
+const app = express();
+
+app.use(express.urlencoded({ extended: true }))
+app.use(require('cookie-parser')())
 
 const Sentry = require("@sentry/node");
 // or use es6 import statements
 // import * as Sentry from '@sentry/node';
-
-const Tracing = require("@sentry/tracing");
-// or use es6 import statements
-// import * as Tracing from '@sentry/tracing';
 
 Sentry.init({
   dsn: "https://62beff43ef9b4db8a3d56b7a44356062@o459000.ingest.sentry.io/5457482",
@@ -16,12 +16,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-const transaction = Sentry.startTransaction({
-  op: "test",
-  name: "My First Test Transaction",
-});
-
-app.use(require('express').static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'))
 
 require('./routes')(app);
 
