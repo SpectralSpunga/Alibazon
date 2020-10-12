@@ -6,7 +6,7 @@ async function category(req, res, next){
 
     let links = [{ link: req.params.category, ap: obj.mainCategory }]
     let user = "none";
-    if(req.cookies.user.user) user = req.cookies.user.user.name;
+    if(req.cookies.user !== "none") user = req.cookies.user.name;
     
     return res.render('category',
     { 
@@ -30,7 +30,7 @@ async function subCategory(req, res, next){
 
     let links = [{ link: "/category/" + category, ap }, { link: '', ap: obj.mainCategory }];
     let user = "none";
-    if(req.cookies.user.user) user = req.cookies.user.user.name;
+    if(req.cookies.user !== "none") user = req.cookies.user.name;
     
     return res.render('category',
     { 

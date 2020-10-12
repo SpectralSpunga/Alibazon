@@ -8,6 +8,14 @@ header{
     color: whitesmoke;
 }
 
+i{
+    font-size: 20px;
+}
+
+#btns-div i{
+    margin-right: 5px;
+}
+
 a, .bread{
     text-decoration: none;
     color: rgb(20, 220, 160);
@@ -83,6 +91,10 @@ h1{
 }
 
 .icon{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     color: whitesmoke;
     text-decoration: none;
     outline: none;

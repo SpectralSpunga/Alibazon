@@ -5,6 +5,4 @@ const config = {
     API: process.env.API
 };
    
-module.exports ={
-    config
-};
+module.exports ={ config };

@@ -1,5 +1,16 @@
 main{
-    max-width: 800px;
+    max-width: 1000px;
     width: 98%;
     margin: auto;
+}
+.img-category{
+    width: 100%;
+    height: auto;
+}
+
+.quantity{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }

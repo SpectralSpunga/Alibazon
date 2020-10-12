@@ -1,16 +1,16 @@
 .main-grid{
-    max-width: 800px;
+    max-width: 1000px;
     width: 98%;
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 390px);
+    grid-template-columns: repeat(2, 490px);
     grid-template-rows: auto;
     grid-gap: 20px;
     margin: auto;
 }
 
 main{
-    max-width: 800px;
+    max-width: 1000px;
     width: 90%;
     margin-top: 20px;
     margin: auto;
@@ -25,8 +25,21 @@ main{
     border-radius: 5px;
     border: 1px solid rgb(216, 216, 216);
     background-color: white;
-    max-width: 800px;
-    width: 98%;
+    min-width: 490px;
+    max-width: 1000px;
+}
+
+#product-elem{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding:10px;
+    box-shadow: 5px 5px 5px rgb(161, 161, 161);
+    border-radius: 5px;
+    border: 1px solid rgb(216, 216, 216);
+    background-color: white;
+    min-width: 490px;
+    max-width: 1000px;
 }
 
 .product-elem h3{
@@ -41,21 +54,45 @@ main{
     justify-content: space-between;
 }
 
+#product-elem h3{
+    margin:0px;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+#product-elem > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 img{
-    width: 35%;
+    width: 100%;
     height: auto;
 }
 
-.imgL{
-    max-width: 100%;
-    height: auto;
+.img-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+}
+
+.img-div-product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 400px;
 }
 
 .product-text{
+    padding: 15px;
     display: flex;
     flex-direction: column;;
     justify-content: space-between;
     margin-left: 10px;
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
 }
 
 .variant{
@@ -69,10 +106,14 @@ img{
     align-items: center;
 }
 
+.product-btn button{
+    font-size: 10px;
+}
 
-@media(max-width: 800px){
+
+@media(max-width: 1050px){
     .main-grid{
-        width: 390px;
-        grid-template-columns: repeat(1, 390px);
+        width: 490px;
+        grid-template-columns: repeat(1, 490px);
     }
 }

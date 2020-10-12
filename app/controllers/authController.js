@@ -2,19 +2,25 @@ const Service = require('../services/authService')
 const { secretKey } = require('../config').config;
 
 function authSignUp(req, res, next){
-    return res.render('signup',{ links: [{ap: "AUTH"}], secretKey, user: 'none'  })
+    return res.render('signup',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign Up" })
 }
 
 function authSignIn(req, res, next){
-    return res.render('signin',{ links: [{ap: "AUTH"}], secretKey, user: 'none' })
+    return res.render('signin',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign In" })
 }
 
 async function postSignUp(req, res, next){
+    req.body.secretKey = secretKey;
     let body = JSON.stringify(req.body)
     let obj = await Service.authSignUp(body);
     if(obj.user){
-        req.user = obj;
-        res.cookie('user', req.user, { httpOnly: true });
+        let user = {
+            name: obj.user.name,
+            email: obj.user.email,
+            date: obj.user.createdAt,
+            token: obj.token
+        }
+        res.cookie('user', user, { httpOnly: true, expires: new Date(Date.now() + 24 * 3600000) });
         return res.redirect('/category/mens');
     }
     else{
@@ -23,15 +29,21 @@ async function postSignUp(req, res, next){
 }
 
 async function postSignIn(req, res, next){
+    req.body.secretKey = secretKey;
     let body = JSON.stringify(req.body)
     let obj = await Service.authSignIn(body);
     if(obj.user){
-        req.user = obj;
-        res.cookie('user', req.user, { httpOnly: true });
+        let user = {
+            name: obj.user.name,
+            email: obj.user.email,
+            date: obj.user.createdAt,
+            token: obj.token
+        }
+        res.cookie('user', user, { httpOnly: true, expires: new Date(Date.now() + 24 * 3600000) });
         return res.redirect('/category/mens')
     }
     else{
-        return res.status(401).json({error: "Forbidden"})
+        return res.redirect("/auth/login")
     }
 }
 

@@ -8,6 +8,8 @@ module.exports = function(app) {
     app.use(require('./products'))
     app.use(require('./signup'))
     app.use(require('./signin'))
+    app.use(require('./cart'))
+    //app.use(require('./wishlist'))
     
     // fallthrough error handler
     app.use(function onError(err, req, res, next) {
