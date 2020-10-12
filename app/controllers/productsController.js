@@ -1,15 +1,15 @@
-const Helper = require('../helpers/productsDataLoader')
+const Service = require('../services/productsService')
 
 async function productsCatalog(req, res, next){
     let requestURL = "primary_category_id=" + req.params.subsubCategory;
-    let obj = await Helper.productsDataLoader(requestURL)
+    let obj = await Service.productsDataLoader(requestURL)
     if(obj instanceof Error) return res.render('NotFound');
 
     let result = obj.data;
     //converts subsubCategory like 'mens-clothing-jackets' to array ['mens', 'clothing', 'jackets']
-    let str = req.params.subsubCategory.split('-')
+    let str = req.params.subsubCategory.split('-') 
 
-    //checking for womens-outfits
+    //checking for womens-outfits 
     if(str.length == 2){
         str = [str[0], "clothing", str[1]]
     }
@@ -20,25 +20,19 @@ async function productsCatalog(req, res, next){
     })
 
     let links = [
-        {
-            link: "/category/" + str[0],
-            ap: arr[0]
-        },
-        {
-            link: "/category/"  + str[0] + "/" + str[1],
-            ap: arr[1]
-        },
-        {
-            link: "/products/" + req.params.subsubCategory,
-            ap: arr[2]
-        }
+        { link: "/category/" + str[0], ap: arr[0] },
+        { link: "/category/"  + str[0] + "/" + str[1], ap: arr[1]},
+        { link: "/products/" + req.params.subsubCategory, ap: arr[2] }
     ]
-    res.render('productsCatalog', { result, links });
+    let user = "none";
+    if(req.cookies.user.user) user = req.cookies.user.user.name;
+
+    res.render('productsCatalog', { result, links, user });
 }
 
 async function productsPage(req, res, next){
     let requestURL = "id=" + req.params.productID;
-    let obj = await Helper.productsDataLoader(requestURL);
+    let obj = await Service.productsDataLoader(requestURL);
     if(obj instanceof Error) return res.render('NotFound');
     
     let result = obj.data;
@@ -53,28 +47,30 @@ async function productsPage(req, res, next){
     })
 
     let links = [
-        {
-            link: "/category/" + str[0],
-            ap: arr[0]
-        },
-        {
-            link: "/category/"  + str[0] + "/" + str[1],
-            ap: arr[1]
-        },
-        {
-            link: "/products/" + req.params.subsubCategory,
-            ap: arr[2]
-        },
-        {
-            link: "/products/" + req.params.subsubCategory + "/" + req.params.productID,
-            ap: result[0].name
-        },
+        { link: "/category/" + str[0], ap: arr[0] }, 
+        { link: "/category/" + str[0] + "/" + str[1], ap: arr[1] },
+        { link: "/products/" + req.params.subsubCategory, ap: arr[2] },
+        { link: "/products/" + req.params.subsubCategory + "/" + req.params.productID, ap: result[0].name },
     ]
+    let user = "none";
+    if(req.cookies.user.user) user = req.cookies.user.user.name;
 
-    res.render('productsPage', { result, links });
+    res.render('productsPage', { product: result[0], links, user });
+}
+
+async function productsSearch(req, res, next){
+    let obj = await Service.search(req.query.q);
+    if(obj instanceof Error) return res.render('NotFound');
+
+    let links = [{ link: '', ap: `${obj.length} results for: ` + req.query.q }]
+    let user = "none";
+    if(req.cookies.user.user) user = req.cookies.user.user.name;
+
+    res.render('productsCatalog', { result: obj, links, user });
 }
 
 module.exports = {
     productsPage,
-    productsCatalog
+    productsCatalog,
+    productsSearch
 }

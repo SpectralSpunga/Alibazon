@@ -6,6 +6,8 @@ module.exports = function(app) {
     // You can add others app.use with other route files
     app.use(require('./category'))
     app.use(require('./products'))
+    app.use(require('./signup'))
+    app.use(require('./signin'))
     
     // fallthrough error handler
     app.use(function onError(err, req, res, next) {

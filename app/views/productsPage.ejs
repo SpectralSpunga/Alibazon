@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head lang="en">
-    <title><%= result[0].name %></title>
-    <link rel='stylesheet' type='text/css' href='/stylesheets/style.css' />
+    <link rel='stylesheet' type='text/css' href='/stylesheets/header.css' />
+    <link rel='stylesheet' type='text/css' href='/stylesheets/products.css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title><%= product.name %></title>
   </head>
   <body>
       <%- include('./header') %>
+      <%- include('./breadcrumbs') %>
 
       <main>
-        <div class='product-page'>
-            <h3 class='product-name'><%= result[0].name %></h3>
-            <div class="product-info">
-                <img class="product-imgL" src="/images/<%= result[0].image_groups[0].images[0].link %>" alt="<%= result[0].image_groups[0].images[0].alt %>">
+        <div class="product-elem">
+            <h3><%= product.name %></h3>
+            <div>
+                <img class="imgL" src="/images/<%= product.image_groups[0].images[0].link %>" alt="<%= product.image_groups[0].images[0].alt %>">
                 <div class="product-text">
-                    <p style="margin-left: 10px;"><%= result[0].long_description %></p>
-                    <div class="product-btn">
-                        <a style="align-self: center;margin-left: 10px;" href="/products/<%= result[0].primary_category_id %>/<%= result[0].id %>">
+                    <p><%= product.long_description %></p>
+
+                    <div>
+                      <p>Product variants:</p>
+                      <% product.variation_attributes.forEach(function(attribute){ %>
+                        <div>
+                          <p><%= attribute.name %>:</p>
+                          <% attribute.values.forEach(function(variant){ %>
+                            <button class="variant"><%= variant.name %></button>
+                          <% }); %>
+                        </div>
+                      <% }); %>
+                    </div>
+                    <div>
+                        <a href="/products/<%= product.primary_category_id %>/<%= product.id %>">
                             <button>BUY NOW</button>
                         </a>
-                        <p style="margin-left: 10px;">Price: $ <%= result[0].price %></p>
+                        <p>Price: $ <%= product.price %></p>
                     </div>
                 </div>
             </div>
         </div>
+        <hr>
       </main>
-
-      <hr>
 
       <footer>Copyright 2020 OSF Digital</footer>
   </body>
