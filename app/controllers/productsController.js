@@ -6,14 +6,9 @@ async function productsCatalog(req, res, next){
     if(obj instanceof Error) return res.render('NotFound');
 
     let result = obj.data;
-    //converts subsubCategory like 'mens-clothing-jackets' to array ['mens', 'clothing', 'jackets']
+
     let str = req.params.subsubCategory.split('-') 
-
-    //checking for womens-outfits 
     if(str.length == 2) str = [str[0], "clothing", str[1]]
-    
-
-    //capitilizes str like ['mens', 'clothing', 'jackets'] to ['Mens', 'Clothing', 'Jackets']
     let arr = str.map(elem=>{
         return elem.charAt(0).toUpperCase() + elem.slice(1);
     })
@@ -35,10 +30,9 @@ async function productsPage(req, res, next){
     if(obj instanceof Error) return res.render('NotFound');
     
     let result = obj.data;
+    
     let str = req.params.subsubCategory.split('-')
-
     if(str.length == 2) str = [str[0], "clothing", str[1]]
-
     let arr = str.map(elem=>{
         return elem.charAt(0).toUpperCase() + elem.slice(1);
     })

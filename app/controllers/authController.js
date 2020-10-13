@@ -9,6 +9,11 @@ function authSignIn(req, res, next){
     return res.render('signin',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign In" })
 }
 
+async function logout(req, res, next){
+    res.cookie('user', 'none', { httpOnly: true });
+    return res.redirect('/category/mens')
+}
+
 async function postSignUp(req, res, next){
     req.body.secretKey = secretKey;
     let body = JSON.stringify(req.body)
@@ -45,11 +50,6 @@ async function postSignIn(req, res, next){
     else{
         return res.redirect("/auth/login")
     }
-}
-
-async function logout(req, res, next){
-    res.cookie('user', 'none', { httpOnly: true });
-    return res.redirect('/category/mens')
 }
 
 module.exports = {

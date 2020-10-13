@@ -27,7 +27,6 @@ async function subCategory(req, res, next){
     if(obj instanceof Error) return res.render('NotFound', { links: [{ap: "NotFound"}]});
 
     let ap = category.charAt(0).toUpperCase() + category.slice(1);
-
     let links = [{ link: "/category/" + category, ap }, { link: '', ap: obj.mainCategory }];
     let user = "none";
     if(req.cookies.user !== "none") user = req.cookies.user.name;
