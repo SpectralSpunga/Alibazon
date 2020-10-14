@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./head') %>
+  <body>
+      <%- include('./header') %>
+      <%- include('./breadcrumbs') %> 
+
+      <main>
+        <% if(result === 'no items') {%>
+            <h1>No items in wishlist</h1>
+        <% } else {%>
+        <table>
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Variation</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <% result.items.forEach(function(elem){ %>
+                <tr class="product-cart" value="<%= elem.productId %>" id="<%= elem.variant.product_id %>">
+                    <td>
+                        <div class="img-cart">
+                            <img src="/images/<%= elem.product[0].image_groups[0].images[0].link %>" alt="<%= elem.product[0].image_groups[0].images[0].alt %>">
+                        </div>
+                    </td>
+                    <td><%= elem.product[0].name %></td>
+                    <td class="price">$<%= elem.variant.price %></td>
+                    <td><%= elem.product[0].primary_category_id %></td>
+                    <td>
+                        <% elem.variation.forEach(function(vari){ %>
+                            <p><%= vari[0] %>: <%= vari[1] %></p>
+                        <% }); %>
+                    </td>
+                    <td>
+                        <div class="quantity">
+                            <button class="minus">-</button>
+                            <p><%= elem.quantity %></p>
+                            <button class="plus">+</button>
+                          </div>
+                    </td>
+                    <td class="total">$<%= elem.total %></td>
+                    <td class="trash"><i class="fas fa-trash"></i></td>
+                    <td><button class="addFromWishlist">ADD TO CART</button></td>
+                </tr>
+            <% }); %>
+        </table>
+        <% } %>
+      </main>
+
+      
+      <%- include('./footer') %>
+      <script src="/javascripts/add.js"></script>
+      <script src="/javascripts/wishlistRemoveItem.js"></script>
+      <script src="/javascripts/wishlistQuantity.js"></script>
+  </body>
+</html>

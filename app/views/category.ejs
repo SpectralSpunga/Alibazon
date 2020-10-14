@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head lang="en">
-    <title><%= title %></title>
-    <link rel='stylesheet' type='text/css' href='/stylesheets/header.css' />
-    <link rel='stylesheet' type='text/css' href='/stylesheets/category.css' />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  </head>
+  <%- include('./head') %>
   <body>
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
+      <main>
 
-      <main> 
-        <h2><%= category %></h2>
+
+        <h2><%= mainCategory %></h2>
         <p><%= description %></p>
 
-        <% obj.forEach(function(elem){ %>
+        <% category.forEach(function(elem){ %>
             <h3><%= elem.name %></h3>
-            <img src="/images/<%= elem.image %>" alt="<%= elem.id %>">
+            <img class="img-category" src="/images/<%= elem.image %>" alt="<%= elem.id %>">
             <p><%= elem.page_description %></p>
 
-            <% if(category == "Mens" || category == 'Womens') {%>
-              <a href="/category/<%= obj[1].parent_category_id %>/<%= elem.name.toLowerCase() %>">
+            <% if(mainCategory == "Mens" || mainCategory == 'Womens') {%>
+              <a href="/category/<%= category[1].parent_category_id %>/<%= elem.name.toLowerCase() %>">
                 <button>VIEW CATEGORIES</button>
               </a>
             <% } else {%>
@@ -30,8 +26,9 @@
             <% } %>
             <hr>
         <% }); %>
-      </main>
 
-      <footer>Copyright 2020 OSF Digital</footer>
+        
+      </main>
+      <%- include('./footer') %>
   </body>
 </html>

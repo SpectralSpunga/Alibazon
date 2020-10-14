@@ -3,31 +3,28 @@ const { secretKey, API } = require('../config').config;
 
 async function productsDataLoader(requestURL){
     try{
-        let obj = await axios.get(`${API}/products/product_search?${requestURL}&secretKey=${secretKey}`);
-        if(obj.error) throw new Error(obj.error); 
-        
-        return obj;
+        let products = await axios.get(`${API}/products/product_search?${requestURL}&secretKey=${secretKey}`);
+        return products.data;
     } catch(err){
         return err;
     }
 }
 
-async function search(q){
+async function productsSearch(query){
     let result = [];
+    let i = 1;
     try{
-        let i = 0;
         while(true){
-            i++;
-            let products = await axios.get(`${API}/products/product_search?secretKey=${secretKey}&page=${i}`);
-            let arr = products.data;
-            for(let j of arr){
-                if(j.page_title && j.page_title.toLowerCase().includes(q.toLowerCase())){
-                    result.push(j) 
+            let response = await axios.get(`${API}/products/product_search?secretKey=${secretKey}&page=${i}`);
+            let products = response.data;
+            for(let elem of products){
+                if(elem.page_title && elem.page_title.toLowerCase().includes(query.toLowerCase())){
+                    result.push(elem) 
                 }
             }
+            i++;
         }
     } catch(err){
-        console.log(err.message)
     } finally{
         return result;
     }
@@ -35,5 +32,5 @@ async function search(q){
 
 module.exports = {
     productsDataLoader,
-    search
+    productsSearch
 }

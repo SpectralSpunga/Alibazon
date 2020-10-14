@@ -7,6 +7,7 @@ $('.product-elem').css({"margin":"auto", "max-width":"600px"})
 $('.sizeVariant').first().css(style)
 $('.colorVariant').first().css(style)
 $('.widthVariant').first().css(style)
+$('.accessorySizeVariant').first().css(style)
 
 function variant(str){
     $(str).on('click', function(e){
@@ -21,6 +22,7 @@ function variant(str){
 variant('.sizeVariant')
 variant('.colorVariant')
 variant('.widthVariant')
+variant('.accessorySizeVariant')
 
 let price = $('.price').text();
 
@@ -34,7 +36,7 @@ async function check(){
 
         let quantity = parseInt($('.quantity p').text());
 
-        let product_id = $('.check').attr('value');
+        let product_id = $('.addToCart').attr('value');
 
         let headers = { "Content-Type":"application/json" }
         let datad = await axios({
@@ -44,6 +46,9 @@ async function check(){
             headers
         });
 
+        $('.addToCart').attr('id', datad.data.variant.product_id)
+        $('.addToWishlist').attr('id', datad.data.variant.product_id)
+
         if(datad.data === 'sold out') {
             $('.check').attr('disabled', 'true')
             $('.addToCart').attr('disabled', 'true')
@@ -52,8 +57,13 @@ async function check(){
         else {
             $('.check').removeAttr('disabled')
             $('.addToCart').removeAttr('disabled')
-            $('.price').text(price)
+            $('.price').text("Price: $" + datad.data.variant.price)
         }
+    }
+    else{
+        $('.check').attr('disabled', 'true')
+        $('.addToCart').attr('disabled', 'true')
+        $('.price').text('Price: SOLD OUT')
     }
 }
 
@@ -66,6 +76,7 @@ function checkVariant(str){
 checkVariant('.sizeVariant')
 checkVariant('.colorVariant')
 checkVariant('.widthVariant')
+checkVariant('.accessorySizeVariant')
 
 $('.minus').on('click', ()=>{
     let q = parseInt($('.quantity p').text());

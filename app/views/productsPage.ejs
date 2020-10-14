@@ -1,46 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head lang="en">
-    <link rel='stylesheet' type='text/css' href='/stylesheets/header.css' />
-    <link rel='stylesheet' type='text/css' href='/stylesheets/products.css' />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <title><%= product.name %></title>
-  </head>
+  <%- include('./head') %>
   <body>
       <%- include('./header') %>
       <%- include('./breadcrumbs') %>
-
       <main>
-        <div class="product-elem">
+
+
+        <div id="product-elem">
             <h3><%= product.name %></h3>
             <div>
-                <img class="imgL" src="/images/<%= product.image_groups[0].images[0].link %>" alt="<%= product.image_groups[0].images[0].alt %>">
+              <div class="img-div-product">
+                <img src="/images/<%= product.image_groups[0].images[0].link %>" alt="<%= product.image_groups[0].images[0].alt %>">
+              </div>
                 <div class="product-text">
-                    <p><%= product.long_description %></p>
+                    <div class="description-p"><%= product.long_description %></div>
 
                     <div>
                       <p>Product variants:</p>
                       <% product.variation_attributes.forEach(function(attribute){ %>
-                        <div>
+                        <div class="variants-div">
                           <p><%= attribute.name %>:</p>
                           <% attribute.values.forEach(function(variant){ %>
-                            <button class="variant"><%= variant.name %></button>
+                            <button class="<%= attribute.id %>Variant" name="<%= attribute.id %>" value="<%= variant.value %>"><%= variant.name %></button>
                           <% }); %>
                         </div>
                       <% }); %>
                     </div>
-                    <div>
+                    <div id="quantity">
+                      <p>Quantity</p>
+                      <div class="quantity">
+                        <button class="minus">-</button>
+                        <p>1</p>
+                        <button class="plus">+</button>
+                      </div>
+                    </div>
+                    <div class="product-btn">
                         <a href="/products/<%= product.primary_category_id %>/<%= product.id %>">
-                            <button>BUY NOW</button>
+                            <button class="buy-now">BUY NOW</button>
                         </a>
-                        <p>Price: $ <%= product.price %></p>
+                        <% if(user === "none") {%>
+                          <a href="/cart"><button value="<%= product.id %>">ADD TO CART</button></a>
+                          <a href="/wishlist"><button value="<%= product.id %>">ADD TO WISHLIST</button></a>
+                        <% } else {%>
+                          <% if(product.variants.length < 1) {%>
+                            <button disabled>SOLD OUT</button></a>
+                          <% } else {%>
+                              <button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button>
+                              <button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button>
+                          <% } %>
+                        <% } %>
+                        <p class="price">Price: $ <%= product.price %></p>
                     </div>
                 </div>
             </div>
         </div>
         <hr>
-      </main>
 
-      <footer>Copyright 2020 OSF Digital</footer>
+        
+      </main>
+      <script src="/javascripts/variation.js"></script>
+      <script src="/javascripts/add.js"></script>
+      <%- include('./footer') %>
   </body>
 </html>

@@ -1,3 +1,34 @@
 table{
     text-align: center;
+    border-collapse: collapse;
+    margin: auto;
+    margin-bottom: 5px;
+    width: 900px;
+}
+
+.img-cart{
+    width: 50px;
+}
+
+td{
+    border-bottom: 1px solid black;
+    padding: 10px;
+    background-color:rgb(223, 219, 230);
+}
+
+#cart-total{
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(204, 192, 228);
+    max-width: 200px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#cart-total h2{
+    margin: 0px;
 }

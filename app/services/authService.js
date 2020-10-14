@@ -1,18 +1,17 @@
 const axios = require('axios');
-const { secretKey, API } = require('../config').config;
+const { API } = require('../config').config;
 
 async function authSignUp(body){
     try{
         let headers = { "Content-Type":"application/json" }
-        let datad = await axios({
+        let signUp = await axios({
             url: `${API}/auth/signup`,
             method: 'post',
             data: body,
             headers
         });
 
-        return datad.data;
-        
+        return signUp.data;
     } catch(err){
         return err;
     }
@@ -21,15 +20,14 @@ async function authSignUp(body){
 async function authSignIn(body){
     try{
         let headers = { "Content-Type":"application/json" }
-        let datad = await axios({
+        let signIn = await axios({
             url: `${API}/auth/signin`,
             method: 'post',
             data: body,
             headers
         });
 
-        return datad.data;
-        
+        return signIn.data;
     } catch(err){
         return err;
     }

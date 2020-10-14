@@ -1,11 +1,11 @@
-const Service = require('../services/cartService')
+const Service = require('../services/wishlistService')
 const pService = require('../services/productsService')
 const { secretKey } = require('../config').config;
 
-async function getCart(req, res, next){
-    let result = await Service.getCart(req.cookies.user.token);
+async function getWishlist(req, res, next){
+    let result = await Service.getWishlist(req.cookies.user.token);
     if(result === "Invalid Token") return res.redirect("/auth/login")
-    if(result === "There is no cart created for this user") result = 'no items'
+    if(result === "There is no wishlist created for this user") result = 'no items'
 
     if(result !== 'no items'){
         for(let variant of result.items){
@@ -22,7 +22,7 @@ async function getCart(req, res, next){
     let links = [{ link: "/profile", ap: "Profile" }, { link: '', ap: "Shopping Cart" }];
     let user = req.cookies.user.name;
 
-    return res.render('cart', { 
+    return res.render('wishlist', { 
         result, 
         links, 
         title: "Cart", 
@@ -44,8 +44,8 @@ async function addItem(req, res, next){
     response = await Service.addItem(req.cookies.user.token, body)
 
     if(response.response){
-        if(response.response.data.error === 'This Item is already in your cart'){
-            let item = await Service.getItemFromCart(req.cookies.user.token, req.body.variant_id);
+        if(response.response.data.error === 'This Item is already in your wishlist'){
+            let item = await Service.getItemFromWishlist(req.cookies.user.token, req.body.variant_id);
             if(item instanceof Error) return res.status(500).send("At addItem")
             body["quantity"] = req.body.quantity + item.quantity;
     
@@ -79,31 +79,9 @@ async function changeQuantity(req, res, next){
     return res.status(200).end()
 }
 
-async function checkProduct(req, res, next){
-    let objArr = Object.keys(req.body.variations).length;
-    let count = 0;
-    if(req.body.product_id){
-        let product = await pService.productsDataLoader(`id=${req.body.product_id}`)
-        if(product instanceof Error) return res.json({error: "Error"})
-
-        const arr = product[0].variants;
-
-        for(let elem of arr){
-            for(let prop in req.body.variations){
-                if(elem.variation_values[prop] == req.body.variations[prop]) count++
-                else count = 0
-
-                if(count === objArr) return res.json({variant: elem, product: product[0]});
-            }
-        }
-    }
-    return res.send('sold out');
-}
-
 module.exports = {
-    getCart,
+    getWishlist,
     addItem,
-    checkProduct,
     removeItem,
     changeQuantity
 }
