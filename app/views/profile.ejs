@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./head') %>
+  <body>
+      <%- include('./header') %>
+      <%- include('./breadcrumbs') %> 
+
+      <main>
+        <div id="profile">
+            <h3>Profile:</h3>
+            <p>Email: <%= user.user.email %></p>
+            <p>Registered: <%= date %></p>
+        </div>
+        <div id="cart-wish">
+            <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i><sub><%= cart %></sub></button></a>
+            <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
+        </div>
+      </main>
+
+      <%- include('./footer') %>
+  </body>
+</html>

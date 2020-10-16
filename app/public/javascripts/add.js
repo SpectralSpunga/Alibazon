@@ -1,33 +1,3 @@
-// $('.addToCart').on('click', async (e)=>{
-//     let quantity = parseInt($('.quantity p').text());
-//     let product_id = e.target.value;
-//     let variant_id = e.target.id;
-//     let headers = { "Content-Type":"application/json" }
-
-//     await axios({
-//         url: `/cart/add`,
-//         method: 'post',
-//         data: {product_id, variant_id, quantity},
-//         headers
-//     });
-//     $(e.target).attr('disabled', 'true')
-// })
-
-// $('.addToWishlist').on('click', async (e)=>{
-//     let quantity = parseInt($('.quantity p').text());
-//     let product_id = e.target.value;
-//     let variant_id = e.target.id;
-//     let headers = { "Content-Type":"application/json" }
-
-//     await axios({
-//         url: `/wishlist/add`,
-//         method: 'post',
-//         data: {product_id, variant_id, quantity},
-//         headers
-//     });
-//     $(e.target).attr('disabled', 'true')
-// })
-
 $('.addFromWishlist').on('click', async (e)=>{
     let q = $(e.target).parent().parent().find($('.quantity p'));
     let quantity = parseInt($(q).text());

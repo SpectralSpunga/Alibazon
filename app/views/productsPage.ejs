@@ -36,21 +36,16 @@
                       </div>
                     </div>
                     <div class="product-btn">
-                        <a href="/products/<%= product.primary_category_id %>/<%= product.id %>">
-                            <button class="buy-now">BUY NOW</button>
-                        </a>
                         <% if(user === "none") {%>
                           <a href="/cart"><button value="<%= product.id %>">ADD TO CART</button></a>
                           <a href="/wishlist"><button value="<%= product.id %>">ADD TO WISHLIST</button></a>
+                        <% } else if(product.variants.length < 1) {%>
+                          <button disabled>SOLD OUT</button></a>
                         <% } else {%>
-                          <% if(product.variants.length < 1) {%>
-                            <button disabled>SOLD OUT</button></a>
-                          <% } else {%>
-                              <button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button>
-                              <button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button>
-                          <% } %>
+                          <button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button>
+                          <button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button>
+                          <p class="price">Price: $ <%= product.price %></p>
                         <% } %>
-                        <p class="price">Price: $ <%= product.price %></p>
                     </div>
                 </div>
             </div>

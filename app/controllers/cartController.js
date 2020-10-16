@@ -20,7 +20,7 @@ async function getCart(req, res, next){
     }
 
     let links = [{ link: "/profile", ap: "Profile" }, { link: '', ap: "Shopping Cart" }];
-    let user = req.cookies.user.name;
+    let user = req.cookies.user;
 
     return res.render('cart', { 
         result, 
@@ -79,31 +79,9 @@ async function changeQuantity(req, res, next){
     return res.status(200).end()
 }
 
-async function checkProduct(req, res, next){
-    let objArr = Object.keys(req.body.variations).length;
-    let count = 0;
-    if(req.body.product_id){
-        let product = await pService.productsDataLoader(`id=${req.body.product_id}`)
-        if(product instanceof Error) return res.json({error: "Error"})
-
-        const arr = product[0].variants;
-
-        for(let elem of arr){
-            for(let prop in req.body.variations){
-                if(elem.variation_values[prop] == req.body.variations[prop]) count++
-                else count = 0
-
-                if(count === objArr) return res.json({variant: elem, product: product[0]});
-            }
-        }
-    }
-    return res.send('sold out');
-}
-
 module.exports = {
     getCart,
     addItem,
-    checkProduct,
     removeItem,
     changeQuantity
 }

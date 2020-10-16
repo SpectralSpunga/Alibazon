@@ -1,0 +1,36 @@
+#profile{
+    background-color: rgb(204, 192, 228);
+    margin: auto;
+    border-radius: 5px;
+    max-width: 200px;
+    padding: 10px;
+}
+
+#profile h3{
+    margin: 0px;
+    text-align: center;
+}
+
+#cart-wish{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: auto;
+    border-radius: 5px;
+    max-width: 200px;
+    padding: 10px;
+}
+
+#cart-wish button{
+    display: block;
+    color: black;
+    width: 70px;
+}
+
+a[href="/wishlist"] sub{
+    margin-left: 3px;
+}
+
+#cart-wish i{
+    font-size: 25px;
+}

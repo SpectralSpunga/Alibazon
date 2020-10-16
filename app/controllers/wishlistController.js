@@ -20,7 +20,7 @@ async function getWishlist(req, res, next){
     }
 
     let links = [{ link: "/profile", ap: "Profile" }, { link: '', ap: "Shopping Cart" }];
-    let user = req.cookies.user.name;
+    let user = req.cookies.user;
 
     return res.render('wishlist', { 
         result, 

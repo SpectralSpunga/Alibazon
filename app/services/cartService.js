@@ -12,8 +12,7 @@ async function getCart(token){
 
         return cart.data;
     } catch(err){
-        console.log(err)
-        return err.response.data.error;
+        if(err.response) return err.response.data.error
     }
 }
 
@@ -86,10 +85,28 @@ async function getItemFromCart(token, item_id){
     }
 }
 
+async function cleanCart(token){
+    try{
+        let cart = await getCart(token)
+        let body = { "secretKey": secretKey }
+
+        for(let elem of cart.items){
+            body.productId = elem.productId;
+            body.variantId = elem.variant.product_id;
+            await removeItem(token, body)
+        }
+
+        return res.status(200).end();
+    } catch(err){
+        return err;
+    }
+}
+
 module.exports = {
     getCart,
     addItem,
     removeItem,
     changeQuantity,
-    getItemFromCart
+    getItemFromCart,
+    cleanCart
 }

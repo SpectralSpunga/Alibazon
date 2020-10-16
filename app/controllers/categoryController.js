@@ -1,8 +1,15 @@
 const Service = require('../services/categoryService')
+const cleanCart = require('../services/cartService').cleanCart
 
 async function category(req, res, next){
+
+    if(req.sessionId){
+        //await cleanCart(req.cookies.user.token)
+        console.log("PEPE")
+    }
+
     let { category, subCategory } = req.params;
-    let result = '', links = [], ap = ''
+    let result = '', links = [], ap = '';
 
     if(subCategory){
         let request = category + "-" + subCategory;
@@ -20,7 +27,7 @@ async function category(req, res, next){
     }
 
     let user = "none";
-    if(req.cookies.user !== "none") user = req.cookies.user.name;
+    if(req.cookies.user !== "none") user = req.cookies.user;
     
     return res.render('category',
     { 

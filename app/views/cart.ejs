@@ -27,7 +27,7 @@
                             <img src="/images/<%= elem.product[0].image_groups[0].images[0].link %>" alt="<%= elem.product[0].image_groups[0].images[0].alt %>">
                         </div>
                     </td>
-                    <td><%= elem.product[0].name %></td>
+                    <td class="product-name"><%= elem.product[0].name %></td>
                     <td class="price">$<%= elem.variant.price %></td>
                     <td><%= elem.product[0].primary_category_id %></td>
                     <td>
@@ -38,7 +38,7 @@
                     <td>
                         <div class="quantity">
                             <button class="minus">-</button>
-                            <p><%= elem.quantity %></p>
+                            <p class="product-quantity"><%= elem.quantity %></p>
                             <button class="plus">+</button>
                           </div>
                     </td>
@@ -52,12 +52,13 @@
         <div id="cart-total">
             <h2>Your cart total:</h2>
             <h3></h3>
-            <button>BUY NOW</button>
+            <button id="checkout-button" type="submit">Checkout</button>
         </div>
       </main>
 
       <%- include('./footer') %>
       <script src="/javascripts/cartRemoveItem.js"></script>
       <script src="/javascripts/cartQuantity.js"></script>
+      <script src="/javascripts/checkout.js"></script>
   </body>
 </html>

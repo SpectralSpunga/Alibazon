@@ -14,7 +14,7 @@
           <a href="/auth/register"><button class="icon"><i class="fas fa-user-plus"></i> SIGN UP</button></a>
           <a href="/auth/login"><button class="icon"><i class="fas fa-sign-in-alt"></i> SIGN IN</button></a>
         <% } else {%>
-          <a href="/profile"><button class="icon"><i class="fas fa-user-circle"></i> <%= user %></button></a>
+          <a href="/profile"><button class="icon"><i class="fas fa-user-circle"></i> <%= user.user.name %></button></a>
           <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i> Cart</button></a>
           <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i> Wishlist</button></a>
           <a href="/auth/logout"><button class="icon"><i class="fas fa-sign-out-alt"></i> SIGN OUT</button></a>
