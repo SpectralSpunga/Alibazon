@@ -1,4 +1,4 @@
-var stripe = Stripe('pk_test_51HcsLmGeV8SUiJfKQ4UOOj0v2N0R09Y3QlrgTWTuDinSHeUqcrth35mnOcgk7brDAirZxQjIlzVAdRKi5T8vaa5i00XfCEEFTs');
+const stripe = Stripe('pk_test_51HcsLmGeV8SUiJfKQ4UOOj0v2N0R09Y3QlrgTWTuDinSHeUqcrth35mnOcgk7brDAirZxQjIlzVAdRKi5T8vaa5i00XfCEEFTs');
 
 $('#checkout-button').on('click', async ()=>{
     const products = $('.product-cart');
@@ -23,11 +23,14 @@ $('#checkout-button').on('click', async ()=>{
         )
     }
 
-    const response = await axios({
-        url: `/create-checkout-session`,
-        method: 'post',
-        data: { items }
-    });
-
-    stripe.redirectToCheckout({ sessionId: response.data.id })
+    if(items.length > 0){
+        const response = await axios({
+            url: `/create-checkout-session`,
+            method: 'post',
+            data: { items }
+        });
+    
+        stripe.redirectToCheckout({ sessionId: response.data.id })
+    }
+    else alert("Your cart is empty")
 })

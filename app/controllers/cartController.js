@@ -79,9 +79,15 @@ async function changeQuantity(req, res, next){
     return res.status(200).end()
 }
 
+async function cleanCart(req, res, next){
+    await Service.cleanCart(req.cookies.user.token)
+    return res.status(200).end()
+}
+
 module.exports = {
     getCart,
     addItem,
     removeItem,
-    changeQuantity
+    changeQuantity,
+    cleanCart
 }

@@ -12,10 +12,7 @@ module.exports = function(app) {
     app.use(require('./cart'))
     app.use(require('./wishlist'))
     app.use(require('./checkout'))
-    app.use('/order/success', (req, res, next)=>{
-      if(!req.cookies.session_id) return res.status(404).end()
-      res.redirect(`/category/mens?order=${req.cookies.session_id}`)
-    })
+    app.use(require('./orders'))
     
     // fallthrough error handler
     app.use(function onError(err, req, res, next) {

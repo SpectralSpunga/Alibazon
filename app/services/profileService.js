@@ -2,27 +2,30 @@ const axios = require('axios');
 const { secretKey, API } = require('../config').config;
 
 async function getProfile(token){
+    let profileCart, profileWishlist;
+    let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
     try{
-        let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let cart = await axios({
             url: `${API}/cart?secretKey=${secretKey}`,
             method: 'get',
             headers
         });
 
+        profileCart = cart.data.items.length;
+    } catch(err){
+        profileCart = 0;
+    }
+    try{
         let wishlist = await axios({
             url: `${API}/wishlist?secretKey=${secretKey}`,
             method: 'get',
             headers
         });
-
-        let profileCart = cart.data.items.length;
-        let profileWishlist = wishlist.data.items.length;
-
-        return { profileCart, profileWishlist };
+        profileWishlist = wishlist.data.items.length;
     } catch(err){
-        console.log(err.response)
-        if(err.response) return err.response.data.error
+        profileWishlist = 0;
+    } finally{
+        return { profileCart, profileWishlist };
     }
 }
 

@@ -19,8 +19,7 @@ async function productsPage(req, res, next){
         { link: "/products/" + req.params.subsubCategory, ap: arr[2] },
         { link: "/products/" + req.params.subsubCategory + "/" + req.params.productID, ap: products[0].name },
     ]
-    let user = "none";
-    if(req.cookies.user !== "none") user = req.cookies.user;
+    let user = req.cookies.user.user ? req.cookies.user : "none";
     
     res.render('productsPage', { product: products[0], links, user, title: products[0].page_title });
 }
@@ -43,8 +42,7 @@ async function productsCatalog(req, res, next){
         { link: "/category/"  + str[0] + "/" + str[1], ap: arr[1]},
         { link: "/products/" + req.params.subsubCategory, ap: arr[2] }
     ]
-    let user = "none";
-    if(req.cookies.user !== "none") user = req.cookies.user;
+    let user = req.cookies.user.user ? req.cookies.user : "none";
 
     res.render('productsCatalog', { products, links, user, title: "Catalog" });
 }
@@ -54,14 +52,13 @@ async function productsSearch(req, res, next){
     if(products instanceof Error) return res.render('NotFound');
 
     let links = [{ link: '', ap: `${products.length} results for: ` + req.query.q }]
-    let user = "none";
-    if(req.cookies.user !== "none") user = req.cookies.user;
+    let user = req.cookies.user.user ? req.cookies.user : "none";
     
     res.render('productsCatalog', { products, links, user, title: "Results for: " + req.query.q });
 }
 
 async function productById(req, res, next){
-    let product = await Service.productsDataLoader(`id=${req.body.product_id}`);
+    let product = await Service.productsDataLoader(`id=${req.params.id}`);
     if(product instanceof Error) return res.status(500).json({error: "Error"});
     
     res.json({ product })

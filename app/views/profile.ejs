@@ -15,6 +15,16 @@
             <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i><sub><%= cart %></sub></button></a>
             <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
         </div>
+
+        <% if(orders === 'There are no orders for this user') {%>
+          <h2>No orders</h2>
+        <% } else {%>
+          <% orders.forEach(function(elem){ %>
+            <div class="order">
+              <h3>Order №<%= elem.paymentId %></h3>
+            </div>
+          <% }); %>
+        <% } %>
       </main>
 
       <%- include('./footer') %>

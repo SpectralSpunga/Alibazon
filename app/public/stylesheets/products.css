@@ -70,18 +70,29 @@ img{
     height: auto;
 }
 
-.img-div{
+.images{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 200px;
+    flex-direction: column;
+
 }
 
-.img-div-product{
+.images img{
+    border: 2px solid rgb(204, 192, 228);
+    border-radius: 5px;
+}
+
+.other-images{
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    min-width: 400px;
+}
+
+.other-images div{
+    width: 100px;
+}
+
+.other-images div, .main-image{
+    margin-left: 10px;
 }
 
 .product-text{

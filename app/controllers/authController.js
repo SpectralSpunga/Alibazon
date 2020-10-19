@@ -1,16 +1,18 @@
 const Service = require('../services/authService')
 const { secretKey } = require('../config').config;
 
-function authSignUp(req, res, next){
+function registerPage(req, res, next){
+    if(req.cookies.user.user) return res.redirect('/category/mens')
     return res.render('signup',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign Up" })
 }
 
-function authSignIn(req, res, next){
+function loginPage(req, res, next){
+    if(req.cookies.user.user) return res.redirect('/category/mens')
     return res.render('signin',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign In" })
 }
 
 async function logout(req, res, next){
-    res.cookie('user', 'none', { httpOnly: true });
+    res.cookie('user', { httpOnly: true, expires: Date.now()});
     return res.redirect('/category/mens')
 }
 
@@ -41,9 +43,9 @@ async function postSignIn(req, res, next){
 }
 
 module.exports = {
-    authSignUp,
+    registerPage,
     postSignUp,
-    authSignIn,
+    loginPage,
     postSignIn,
     logout
 }

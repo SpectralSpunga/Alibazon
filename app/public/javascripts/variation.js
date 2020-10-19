@@ -3,6 +3,18 @@ const style = { "color": "crimson" }
 let product_id = $('.addToCart').attr('value');
 let variants = '';
 
+async function loadVariants(){
+    let headers = { "Content-Type":"application/json" }
+    let datad = await axios({
+        url: `/productById/${product_id}`,
+        method: 'get',
+        headers
+    });
+
+    variants = datad.data.product[0].variants;
+    check()
+}
+
 $('.description-p').html($('.description-p').text())
 
 function changeColor(str){
@@ -13,19 +25,6 @@ function changeColor(str){
         const btn = e.target;
         $(btn).css(style)
     })
-}
-
-async function loadVariants(){
-    let headers = { "Content-Type":"application/json" }
-    let datad = await axios({
-        url: `/productById`,
-        method: 'post',
-        data: { product_id },
-        headers
-    });
-
-    variants = datad.data.product[0].variants;
-    check()
 }
 
 function check(){
@@ -55,8 +54,6 @@ function check(){
     }
     $('.price').text('SOLD OUT');
     $('.addToCart').attr('disabled', 'true')
-    $('.addToCart').attr('id', variant.product_id)
-    $('.addToWishlist').attr('id', variant.product_id)
     return 0;
 }
 

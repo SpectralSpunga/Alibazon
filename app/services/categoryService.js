@@ -6,9 +6,6 @@ async function categoryDataLoader(category){
         let subCategory = await axios.get(`${API}/categories/parent/${category}?secretKey=${secretKey}`);
         let mainCategory = await axios.get(`${API}/categories/${category}?secretKey=${secretKey}`);
 
-        if (subCategory.length) throw new Error()
-        else if (mainCategory.length) throw new Error()
-
         return {
             data: subCategory.data, 
             mainCategory: mainCategory.data.name, 

@@ -10,8 +10,18 @@
         <div id="product-elem">
             <h3><%= product.name %></h3>
             <div>
-              <div class="img-div-product">
-                <img src="/images/<%= product.image_groups[0].images[0].link %>" alt="<%= product.image_groups[0].images[0].alt %>">
+              <div class="images">
+                <div class="main-image">
+                  <img src="/images/<%= product.image_groups[0].images[0].link %>" alt="<%= product.image_groups[0].images[0].alt %>">
+                </div>
+
+                <div class="other-images">
+                  <% product.image_groups[0].images.forEach(function(image){ %>
+                    <div >
+                      <img src="/images/<%= image.link %>" alt="<%= image.alt %>">
+                    </div>
+                  <% }); %>
+                </div>
               </div>
                 <div class="product-text">
                     <div class="description-p"><%= product.long_description %></div>
@@ -36,16 +46,18 @@
                       </div>
                     </div>
                     <div class="product-btn">
+                      <% if(product.variants.length >= 1) {%>
                         <% if(user === "none") {%>
-                          <a href="/cart"><button value="<%= product.id %>">ADD TO CART</button></a>
-                          <a href="/wishlist"><button value="<%= product.id %>">ADD TO WISHLIST</button></a>
-                        <% } else if(product.variants.length < 1) {%>
-                          <button disabled>SOLD OUT</button></a>
+                          <a href="/cart"><button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button></a>
+                          <a href="/wishlist"><button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button></a>
                         <% } else {%>
                           <button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button>
                           <button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button>
-                          <p class="price">Price: $ <%= product.price %></p>
                         <% } %>
+                        <p class="price">Price: $ <%= product.price %></p>
+                      <% } else {%>
+                        <button disabled>SOLD OUT</button></a>
+                      <% } %>
                     </div>
                 </div>
             </div>
@@ -56,6 +68,7 @@
       </main>
       <script src="/javascripts/variation.js"></script>
       <script src="/javascripts/add.js"></script>
+      <script src="/javascripts/imageHandler.js"></script>
       <%- include('./footer') %>
   </body>
 </html>

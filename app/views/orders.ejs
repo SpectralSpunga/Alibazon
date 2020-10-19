@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./head') %>
+  <body>
+      <%- include('./header') %>
+      <%- include('./breadcrumbs') %> 
+      <main>
+        <% if(orders === 'There are no orders for this user') {%>
+            <h2>No orders</h2>
+        <% } else {%>
+          <% orders.forEach(function(elem){ %>
+            <div class="order">
+              <h3>Order №<%= elem.paymentId %></h3>
+            </div>
+          <% }); %>
+        <% } %>
+        
+      </main>
+      <%- include('./footer') %>
+  </body>
+</html>
