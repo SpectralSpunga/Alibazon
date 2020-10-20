@@ -17,11 +17,12 @@ async function productsSearch(query){
         while(true){
             let response = await axios.get(`${API}/products/product_search?secretKey=${secretKey}&page=${i}`);
             let products = response.data;
-            for(let elem of products){
+
+            products.map( elem =>{
                 if(elem.page_title && elem.page_title.toLowerCase().includes(query.toLowerCase())){
                     result.push(elem) 
                 }
-            }
+            })
             i++;
         }
     } catch(err){

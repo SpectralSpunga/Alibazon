@@ -15,7 +15,7 @@ async function createOrder(req, res, next){
     }
 
     await Service.createOrder(req.cookies.user.token, body);
-    res.status(200).end()
+    res.status(201).end()
 }
 
 async function successOrder(req, res, next){

@@ -5,7 +5,7 @@ async function authSignUp(body){
     try{
         let headers = { "Content-Type":"application/json" }
         let signUp = await axios({
-            url: `${API}/auth/signup`,
+            url: `${API}/auth/signup`, 
             method: 'post',
             data: body,
             headers

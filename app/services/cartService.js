@@ -16,7 +16,7 @@ async function getCart(token){
     }
 }
 
-async function addItem(token, body){
+async function addItemToCart(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let cart = await axios({
@@ -32,7 +32,7 @@ async function addItem(token, body){
     }
 }
 
-async function removeItem(token, body){
+async function removeItemFromCart(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let cart = await axios({
@@ -48,7 +48,7 @@ async function removeItem(token, body){
     }
 }
 
-async function changeQuantity(token, body){
+async function changeQuantityCart(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let cart = await axios({
@@ -69,7 +69,7 @@ async function getItemFromCart(token, item_id){
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let cart = await axios({
             url: `${API}/cart?secretKey=${secretKey}`,
-            method: 'get',
+            method: 'get', 
             headers
         });
 
@@ -96,7 +96,7 @@ async function cleanCart(token){
             await removeItem(token, body)
         }
 
-        return res.status(200).end();
+        return 0; 
     } catch(err){
         return err;
     }
@@ -104,9 +104,9 @@ async function cleanCart(token){
 
 module.exports = {
     getCart,
-    addItem,
-    removeItem,
-    changeQuantity,
+    addItemToCart,
+    removeItemFromCart,
+    changeQuantityCart,
     getItemFromCart,
     cleanCart
 }

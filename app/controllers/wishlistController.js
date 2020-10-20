@@ -1,5 +1,5 @@
 const Service = require('../services/wishlistService')
-const pService = require('../services/productsService')
+const productsDataLoader = require('../services/productsService').productsDataLoader
 const { secretKey } = require('../config').config;
 
 async function getWishlist(req, res, next){
@@ -10,7 +10,7 @@ async function getWishlist(req, res, next){
     if(result !== 'no items'){
         for(let variant of result.items){
             variant.variation = [];
-            let datad = await pService.productsDataLoader(`id=${variant.productId}`);
+            let datad = await productsDataLoader(`id=${variant.productId}`);
             variant.product = datad;
             variant.total = (variant.quantity * variant.variant.price).toFixed(2);
             for(let prop in variant.variant.variation_values){
@@ -31,8 +31,6 @@ async function getWishlist(req, res, next){
 }
 
 async function addItem(req, res, next){
-    let product = await pService.productsDataLoader(`id=${req.body.product_id}`)
-    if(product instanceof Error) return res.json({error: "Error"})
     let response = '';
     let body = {
         "secretKey": secretKey,
@@ -41,19 +39,17 @@ async function addItem(req, res, next){
     }
 
     body["quantity"] = req.body.quantity === null ? 1 : req.body.quantity ;
-    response = await Service.addItem(req.cookies.user.token, body)
+    response = await Service.addItemToWishlist(req.cookies.user.token, body)
 
-    if(response.response){
-        if(response.response.data.error === 'This Item is already in your wishlist'){
-            let item = await Service.getItemFromWishlist(req.cookies.user.token, req.body.variant_id);
-            if(item instanceof Error) return res.status(500).send("At addItem")
-            body["quantity"] = req.body.quantity + item.quantity;
-    
-            await Service.changeQuantity(req.cookies.user.token, body)
-        }
+    if(response.response && response.response.data.error === 'This Item is already in your wishlist'){
+        let item = await Service.getItemFromWishlist(req.cookies.user.token, req.body.variant_id);
+        if(item instanceof Error) return next(item)
+        body["quantity"] = req.body.quantity + item.quantity;
+
+        await Service.changeQuantity(req.cookies.user.token, body)
     }
 
-    return res.status(200).end()
+    return res.status(201).end()
 }
 
 async function removeItem(req, res, next){
@@ -62,8 +58,9 @@ async function removeItem(req, res, next){
         "productId": req.body.product_id,
         "variantId": req.body.variant_id
     }
+    let response = await Service.removeItemFromWishlist(req.cookies.user.token, body)
+    if(response instanceof Error) return next(response)
 
-    await Service.removeItem(req.cookies.user.token, body)
     return res.status(200).end()
 }
 
@@ -75,7 +72,9 @@ async function changeQuantity(req, res, next){
         "quantity": req.body.quantity
     }
 
-    await Service.changeQuantity(req.cookies.user.token, body)
+    let response = await Service.changeQuantityWishlist(req.cookies.user.token, body)
+    if(response instanceof Error) return next(response)
+
     return res.status(200).end()
 }
 

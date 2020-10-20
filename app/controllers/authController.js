@@ -16,12 +16,12 @@ async function logout(req, res, next){
     return res.redirect('/category/mens')
 }
 
-async function postSignUp(req, res, next){
+async function postSignUp(req, res, next){ 
     req.body.secretKey = secretKey;
     let body = JSON.stringify(req.body)
     let user = await Service.authSignUp(body);
     if(user.user){
-        res.cookie('user', user, { httpOnly: true, expires: new Date(Date.now() + 24 * 3600000) });
+        res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens');
     }
     else{
@@ -34,7 +34,7 @@ async function postSignIn(req, res, next){
     let body = JSON.stringify(req.body)
     let user = await Service.authSignIn(body);
     if(user.user){
-        res.cookie('user', user, { httpOnly: true, expires: new Date(Date.now() + 24 * 3600000) });
+        res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens')
     }
     else{

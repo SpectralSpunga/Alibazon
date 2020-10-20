@@ -49,7 +49,7 @@
                       <% if(product.variants.length >= 1) {%>
                         <% if(user === "none") {%>
                           <a href="/cart"><button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button></a>
-                          <a href="/wishlist"><button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button></a>
+                          <a href="/wishlist"></a><button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button></a>
                         <% } else {%>
                           <button class="addToCart" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO CART</button>
                           <button class="addToWishlist" value="<%= product.id %>" id="<%= product.variants[0].product_id %>">ADD TO WISHLIST</button>

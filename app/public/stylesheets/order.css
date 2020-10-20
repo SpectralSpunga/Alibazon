@@ -1,3 +1,31 @@
 .order{
+    background-color: none;
+    max-width: 900px;
+    width: 95%;
+    margin: auto;
+}
+
+.order h3{
+    background-color: none;
+    border-bottom: 1px solid black;
+    margin-bottom: 0px;
+}
+
+table{
+    max-width: 900px;
+    width: 80%;
+}
+
+thead{
     background-color: rgb(204, 192, 228);
+}
+
+.th-product{
+    max-width: 300px;
+    width: 100%;
+}
+
+.th-img{
+    width: 20%;
+    height: auto;
 }

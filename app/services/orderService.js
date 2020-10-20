@@ -28,7 +28,7 @@ async function createOrder(token, body){
 
         return order;
     } catch(err){
-        console.log(err.response.data)
+        return err
     }
 }
 

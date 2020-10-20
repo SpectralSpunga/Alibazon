@@ -12,11 +12,11 @@ async function getWishlist(token){
 
         return wishlist.data;
     } catch(err){
-        return err.response.data.error;
+        if(err.response) return err.response.data.error
     }
 }
 
-async function addItem(token, body){
+async function addItemToWishlist(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let wishlist = await axios({
@@ -32,7 +32,7 @@ async function addItem(token, body){
     }
 }
 
-async function removeItem(token, body){
+async function removeItemFromWishlist(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let wishlist = await axios({
@@ -48,7 +48,7 @@ async function removeItem(token, body){
     }
 }
 
-async function changeQuantity(token, body){
+async function changeQuantityWishlist(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
         let wishlist = await axios({
@@ -87,8 +87,8 @@ async function getItemFromWishlist(token, item_id){
 
 module.exports = {
     getWishlist,
-    addItem,
-    removeItem,
-    changeQuantity,
+    addItemToWishlist,
+    removeItemFromWishlist,
+    changeQuantityWishlist,
     getItemFromWishlist
 }

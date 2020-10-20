@@ -16,17 +16,38 @@
             <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
         </div>
 
-        <% if(orders === 'There are no orders for this user') {%>
+        <% if(orders === 'No orders') {%>
           <h2>No orders</h2>
         <% } else {%>
           <% orders.forEach(function(elem){ %>
             <div class="order">
-              <h3>Order №<%= elem.paymentId %></h3>
+              <table class="ordered-products">
+                <h3>Order № <%= elem.paymentId %></h3>
+                <thead>
+                  <th class="th-img"></th>
+                  <th class="th-product">Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </thead>
+                <tbody>
+                  <% elem.items.forEach(function(elem) { %>
+                    <tr>
+                      <td>
+                        <img src="" alt="">
+                      </td>
+                      <td class="productId" id="<%= elem.productId %>">product name</td>
+                      <td id="ordered-product-price">$<%= elem.variant.price %></td>
+                      <td id="ordered-product-quantity"><%= elem.quantity %></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
             </div>
           <% }); %>
         <% } %>
       </main>
 
       <%- include('./footer') %>
+      <script src="/javascripts/getProductNames.js"></script>
   </body>
 </html>
