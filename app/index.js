@@ -4,6 +4,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(require('cookie-parser')())
+app.use(require('./middlewares/secretKeyAdder').secretKeyAdder)
 
 const Sentry = require("@sentry/node");
 // or use es6 import statements

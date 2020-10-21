@@ -1,6 +1,6 @@
 const Service = require('../services/orderService');
 const getCart = require('../services/cartService').getCart
-const { secretKey, STRIPE_SECRET_KEY } = require('../config').config;
+const { STRIPE_SECRET_KEY } = require('../config').config;
 
 async function createOrder(req, res, next){
     const stripe = require('stripe')(STRIPE_SECRET_KEY);
@@ -8,7 +8,7 @@ async function createOrder(req, res, next){
 
     let cart = await getCart(req.cookies.user.token);
     let body = {
-        secretKey,
+        secretKey: req.body.secretKey,
         paymentId: req.cookies.payment_id,
         address: session.shipping.address.country,
         items: cart.items 

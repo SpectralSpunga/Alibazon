@@ -1,5 +1,4 @@
 const Service = require('../services/authService')
-const { secretKey } = require('../config').config;
 
 function registerPage(req, res, next){
     if(req.cookies.user.user) return res.redirect('/category/mens')
@@ -16,10 +15,8 @@ async function logout(req, res, next){
     return res.redirect('/category/mens')
 }
 
-async function postSignUp(req, res, next){ 
-    req.body.secretKey = secretKey;
-    let body = JSON.stringify(req.body)
-    let user = await Service.authSignUp(body);
+async function postSignUp(req, res, next){
+    let user = await Service.authSignUp(req.body);
     if(user.user){
         res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens');
@@ -30,9 +27,7 @@ async function postSignUp(req, res, next){
 }
 
 async function postSignIn(req, res, next){
-    req.body.secretKey = secretKey;
-    let body = JSON.stringify(req.body)
-    let user = await Service.authSignIn(body);
+    let user = await Service.authSignIn(req.body);
     if(user.user){
         res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens')

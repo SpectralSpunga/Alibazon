@@ -1,6 +1,5 @@
 const Service = require('../services/cartService')
 const productsDataLoader = require('../services/productsService').productsDataLoader
-const { secretKey } = require('../config').config;
 
 async function getCart(req, res, next){
     let result = await Service.getCart(req.cookies.user.token);
@@ -31,29 +30,21 @@ async function getCart(req, res, next){
 }
 
 async function addItem(req, res, next){
-    let response = '';
     let body = {
-        "secretKey": secretKey,
+        "secretKey": req.body.secretKey,
         "productId": req.body.product_id,
         "variantId": req.body.variant_id,
     }
 
     body["quantity"] = req.body.quantity === null ? 1 : req.body.quantity ;
-    response = await Service.addItemToCart(req.cookies.user.token, body)
-
-    if(response.response && response.response.data.error === 'This Item is already in your cart'){
-        let item = await Service.getItemFromCart(req.cookies.user.token, req.body.variant_id);
-        if(item instanceof Error) return next(item)
-        body["quantity"] = req.body.quantity + item.quantity;
-        await Service.changeQuantityCart(req.cookies.user.token, body)
-    }
+    await Service.addItemToCart(req.cookies.user.token, body)
     
     return res.status(201).end()
 }
 
 async function removeItem(req, res, next){
     let body = {
-        "secretKey": secretKey,
+        "secretKey": req.body.secretKey,
         "productId": req.body.product_id,
         "variantId": req.body.variant_id
     }
@@ -65,7 +56,7 @@ async function removeItem(req, res, next){
 
 async function changeQuantity(req, res, next){
     let body = {
-        "secretKey": secretKey,
+        "secretKey": req.body.secretKey,
         "productId": req.body.product_id,
         "variantId": req.body.variant_id,
         "quantity": req.body.quantity

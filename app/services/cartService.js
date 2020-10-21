@@ -19,15 +19,23 @@ async function getCart(token){
 async function addItemToCart(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
-        let cart = await axios({
+        await axios({
             url: `${API}/cart/addItem`,
             method: 'post',
             data: body,
             headers
         });
 
-        return cart.data;
+        return 'Successfully added item';
     } catch(err){
+        if(err.response && err.response.data.error === 'This Item is already in your cart'){
+            let item = await getItemFromCart(token, body.variantId);
+            if(item instanceof Error) throw new Error()
+            
+            body["quantity"] = body.quantity + item.quantity;
+            await changeQuantityCart(token, body)
+            return 'Successfully added item'
+        }
         return err;
     }
 }
@@ -79,7 +87,7 @@ async function getItemFromCart(token, item_id){
             }
         }
 
-        return cart.data;
+        return { error: "Variant not found" };
     } catch(err){
         return err;
     }
@@ -88,21 +96,24 @@ async function getItemFromCart(token, item_id){
 async function cleanCart(token){
     try{
         let cart = await getCart(token)
+        if(cart instanceof Error) throw new Error("error")
+        if(cart.data === 'There is no cart created for this user') throw new Error("no cart for user")
+
         let body = { "secretKey": secretKey }
 
         for(let elem of cart.items){
             body.productId = elem.productId;
             body.variantId = elem.variant.product_id;
-            await removeItem(token, body)
+            await removeItemFromCart(token, body)
         }
 
-        return 0; 
+        return 'Cart has been cleaned'; 
     } catch(err){
         return err;
     }
 }
 
-module.exports = {
+module.exports = { 
     getCart,
     addItemToCart,
     removeItemFromCart,

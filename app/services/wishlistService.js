@@ -26,8 +26,15 @@ async function addItemToWishlist(token, body){
             headers
         });
 
-        return wishlist.data;
+        return 'Successfully added item';
     } catch(err){
+        if(err.response && err.response.data.error === 'This Item is already in your wishlist'){
+            let item = await getItemFromWishlist(token, body.variantId);
+            if(item instanceof Error) throw new Error()
+            body["quantity"] = body.quantity + item.quantity;
+            await changeQuantityWishlist(token, body)
+            return 'Successfully added item'
+        }
         return err;
     }
 }
@@ -79,7 +86,7 @@ async function getItemFromWishlist(token, item_id){
             }
         }
 
-        return wishlist.data;
+        return { error: "Variant not found" };
     } catch(err){
         return err;
     }
