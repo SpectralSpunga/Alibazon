@@ -8,9 +8,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRi
 describe('cleanCart', ()=>{
     // test("should clean cart when payment succeeded", async ()=>{
     //     const cart = await Services.cleanCart(token)
-    //     if(cart.message && cart.message !== 'There is no cart created for this user'){
-    //         expect(cart).toEqual('Cart has been cleaned')
-    //     }
+    //     expect(cart).toEqual('Cart has been cleaned')
     // })
 
     test("shouldn't clean cart with invalid token", async ()=>{

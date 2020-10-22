@@ -14,7 +14,8 @@ async function getProfile(token){
 
         profileCart = cart.data.items.length;
     } catch(err){
-        profileCart = 0;
+        if(err.response && err.response.data.error === 'There is no cart created for this user') profileCart = 0;
+        else return err
     }
 
     try{
@@ -25,7 +26,8 @@ async function getProfile(token){
         });
         profileWishlist = wishlist.data.items.length;
     } catch(err){
-        profileWishlist = 0;
+        if(err.response && err.response.data.error === 'There is no wishlist created for this user') profileWishlist = 0;
+        else return err
     }
 
     try{

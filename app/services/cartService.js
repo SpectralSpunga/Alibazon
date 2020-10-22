@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { secretKey, API } = require('../config').config;
+const productsDataLoader = require('../services/productsService').productsDataLoader
 
 async function getCart(token){
     try{
@@ -9,6 +10,16 @@ async function getCart(token){
             method: 'get',
             headers
         });
+
+        for(let variant of cart.data.items){
+            variant.variation = [];
+            let product = await productsDataLoader(`id=${variant.productId}`);
+            variant.product = product;
+            variant.total = (variant.quantity * variant.variant.price).toFixed(2);
+            for(let prop in variant.variant.variation_values){
+                variant.variation.push([prop, variant.variant.variation_values[prop]])
+            }
+        }
 
         return cart.data;
     } catch(err){
@@ -31,8 +42,7 @@ async function addItemToCart(token, body){
         if(err.response && err.response.data.error === 'This Item is already in your cart'){
             let item = await getItemFromCart(token, body.variantId);
             if(item instanceof Error) throw new Error()
-            
-            body["quantity"] = body.quantity + item.quantity;
+            body.quantity += item.quantity;
             await changeQuantityCart(token, body)
             return 'Successfully added item'
         }

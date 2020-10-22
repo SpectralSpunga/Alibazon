@@ -26,7 +26,7 @@ async function createOrder(token, body){
             headers
         });
 
-        return order;
+        return order.data;
     } catch(err){
         return err
     }

@@ -11,7 +11,7 @@ describe('addItemToCart', ()=>{
             secretKey,
             "productId": "25565189",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
         const cart = await Services.addItemToCart(token, body)
 
@@ -23,21 +23,21 @@ describe('addItemToCart', ()=>{
             secretKey,
             "productId": "25565189",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
 
         let body3 = {
             secretKey,
             "productId": "255",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
 
         let body4 = {
             secretKey,
             "productId": "25565189",
             "variantId": "7",
-            "quantity":"2"
+            "quantity":2
         }
         const cart1 = await Services.addItemToCart(token + "peepeepoopoo", body1)
         const cart3 = await Services.addItemToCart(token, body3)

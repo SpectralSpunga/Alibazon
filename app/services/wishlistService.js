@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { secretKey, API } = require('../config').config;
+const productsDataLoader = require('../services/productsService').productsDataLoader
 
 async function getWishlist(token){
     try{
@@ -10,6 +11,16 @@ async function getWishlist(token){
             headers
         });
 
+        for(let variant of wishlist.data.items){
+            variant.variation = [];
+            let datad = await productsDataLoader(`id=${variant.productId}`);
+            variant.product = datad;
+            variant.total = (variant.quantity * variant.variant.price).toFixed(2);
+            for(let prop in variant.variant.variation_values){
+                variant.variation.push([prop, variant.variant.variation_values[prop]])
+            }
+        }
+
         return wishlist.data;
     } catch(err){
         if(err.response) return err.response.data.error
@@ -19,7 +30,7 @@ async function getWishlist(token){
 async function addItemToWishlist(token, body){
     try{
         let headers = { "Content-Type":"application/json", "Authorization": "Bearer " + token }
-        let wishlist = await axios({
+        await axios({
             url: `${API}/wishlist/addItem`,
             method: 'post',
             data: body,
@@ -31,7 +42,7 @@ async function addItemToWishlist(token, body){
         if(err.response && err.response.data.error === 'This Item is already in your wishlist'){
             let item = await getItemFromWishlist(token, body.variantId);
             if(item instanceof Error) throw new Error()
-            body["quantity"] = body.quantity + item.quantity;
+            body.quantity += item.quantity;
             await changeQuantityWishlist(token, body)
             return 'Successfully added item'
         }

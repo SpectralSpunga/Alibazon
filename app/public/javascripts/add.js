@@ -28,6 +28,7 @@ $('.product-btn').on('click', async (e)=>{
     let variant_id = e.target.id;
     let headers = { "Content-Type":"application/json" }
     let url = ''
+    console.log(product_id, variant_id, quantity)
 
     if($(e.target).attr('class') === "addToCart" ) url = "/cart/add"
     else if($(e.target).attr('class') === "addToWishlist") url = "/wishlist/add"
@@ -37,11 +38,11 @@ $('.product-btn').on('click', async (e)=>{
     $(e.target).attr('disabled', 'true')
 })
 
-async function add(pId, vId, q, url, headers){
+async function add(product_id, variant_id, quantity, url, headers){
     await axios({
         url,
         method: 'post',
-        data: {pId, vId, q},
+        data: {product_id, variant_id, quantity},
         headers
     });
 }

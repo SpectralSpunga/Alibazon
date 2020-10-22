@@ -11,7 +11,7 @@ describe('addItemToWishlist', ()=>{
             secretKey,
             "productId": "25565189",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
         const wishlist = await Services.addItemToWishlist(token, body)
 
@@ -23,21 +23,21 @@ describe('addItemToWishlist', ()=>{
             secretKey,
             "productId": "25565189",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
 
         let body3 = {
             secretKey,
             "productId": "255",
             "variantId": "701643540037",
-            "quantity":"2"
+            "quantity":2
         }
 
         let body4 = {
             secretKey,
             "productId": "25565189",
             "variantId": "7",
-            "quantity":"2"
+            "quantity":2
         }
         const wishlist1 = await Services.addItemToWishlist(token + "peepeepoopoo", body1)
         const wishlist3 = await Services.addItemToWishlist(token, body3)

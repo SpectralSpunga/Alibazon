@@ -31,6 +31,27 @@ async function productsSearch(query){
     }
 }
 
+
+function searchDecorator(search){
+    let result = new Map()
+
+    return function(query){
+        if(result.has(query)) return result.get(query)
+
+        let searchResult = search(query)
+        result.set(query, searchResult)
+        
+        // if(result.has('clear')) return result.get(query);
+        // result.set('clear', setTimeout(()=>{
+        //     result.clear()
+        // }, 5 * 60 * 1000))
+
+        return result.get(query);
+    }
+}
+
+productsSearch = searchDecorator(productsSearch);
+
 module.exports = {
     productsDataLoader,
     productsSearch
