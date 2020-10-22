@@ -1,4 +1,4 @@
-const Service = require('../services/productsService')
+const Service = require('../services/allServices')
 
 async function productsPage(req, res, next){
     let requestURL = "id=" + req.params.productID;

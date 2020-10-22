@@ -41,5 +41,4 @@ jQuery(function() {
         })
     }
     moreProducts(25)
-
 })

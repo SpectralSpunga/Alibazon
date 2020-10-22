@@ -1,4 +1,4 @@
-const Service = require('../services/categoryService')
+const Service = require('../services/allServices')
 
 async function category(req, res, next){
     let { category, subCategory } = req.params;
