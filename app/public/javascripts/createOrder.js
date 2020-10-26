@@ -1,4 +1,4 @@
-async function createOrderDeleteCart(){
+(async function createOrderDeleteCart(){
     await axios({
         url: `/orders`,
         method: 'post'
@@ -8,6 +8,4 @@ async function createOrderDeleteCart(){
         url: `/cart`,
         method: 'delete'
     });
-}
-
-createOrderDeleteCart()
+})()

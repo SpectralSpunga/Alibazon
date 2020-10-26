@@ -23,24 +23,32 @@
             <div class="order">
               <table class="ordered-products">
                 <h3>Order № <%= elem.paymentId %></h3>
-                <thead>
-                  <th class="th-img"></th>
-                  <th class="th-product">Product</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                </thead>
-                <tbody>
-                  <% elem.items.forEach(function(elem) { %>
-                    <tr>
-                      <td>
-                        <img src="" alt="">
-                      </td>
-                      <td class="productId" id="<%= elem.productId %>">product name</td>
-                      <td id="ordered-product-price">$<%= elem.variant.price %></td>
-                      <td id="ordered-product-quantity"><%= elem.quantity %></td>
-                    </tr>
+                  <tr>
+                      <th></th>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Variation</th>
+                      <th>Quantity</th>
+                  </tr>
+                  <% elem.items.forEach(function(item){ %>
+                      <tr class="product-cart" value="<%= item.productId %>" id="<%= item.variant.product_id %>">
+                          <td>
+                              <div class="img-cart">
+                                  <img src="" alt="" id="<%= item.variant.variation_values ? item.variant.variation_values.color : 'none' %>">
+                              </div>
+                          </td>
+                          <td class="product-name"></td>
+                          <td class="price">$<%= item.variant.price %></td>
+                          <td class="primary-category-id"></td>
+                          <td class="variantions"></td>
+                          <td>
+                            <div class="quantity">
+                              <p class="product-quantity"><%= item.quantity %></p>
+                            </div>
+                          </td>
+                      </tr>
                   <% }); %>
-                </tbody>
               </table>
             </div>
           <% }); %>
@@ -48,6 +56,6 @@
       </main>
 
       <%- include('./footer') %>
-      <script src="/javascripts/getProductNames.js"></script>
+      <script type="module" src="/javascripts/loadProducts.js"></script>
   </body>
 </html>

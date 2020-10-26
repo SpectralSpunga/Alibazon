@@ -24,17 +24,13 @@
                 <tr class="product-cart" value="<%= elem.productId %>" id="<%= elem.variant.product_id %>">
                     <td>
                         <div class="img-cart">
-                            <img src="/images/<%= elem.product[0].image_groups[0].images[0].link %>" alt="<%= elem.product[0].image_groups[0].images[0].alt %>">
+                            <img src="" alt="" id="<%= elem.variant.variation_values ? elem.variant.variation_values.color : 'none' %>">
                         </div>
                     </td>
-                    <td class="product-name"><%= elem.product[0].name %></td>
+                    <td class="product-name"></td>
                     <td class="price">$<%= elem.variant.price %></td>
-                    <td><%= elem.product[0].primary_category_id %></td>
-                    <td>
-                        <% elem.variation.forEach(function(vari){ %>
-                            <p><%= vari[0] %>: <%= vari[1] %></p>
-                        <% }); %>
-                    </td>
+                    <td class="primary-category-id"></td>
+                    <td class="variantions"></td>
                     <td>
                         <div class="quantity">
                             <button class="minus">-</button>
@@ -42,7 +38,7 @@
                             <button class="plus">+</button>
                           </div>
                     </td>
-                    <td class="total">$<%= elem.total %></td>
+                    <td class="total"></td>
                     <td class="trash"><i class="fas fa-trash"></i></td>
                 </tr>
             <% }); %>
@@ -57,8 +53,9 @@
       </main>
 
       <%- include('./footer') %>
-      <script src="/javascripts/cartRemoveItem.js"></script>
-      <script src="/javascripts/cartQuantity.js"></script>
+      <script type="module" src="/javascripts/removeItem.js"></script>
+      <script type="module" src="/javascripts/loadProducts.js"></script>
+      <script type="module" src="/javascripts/changeQuantity.js"></script>
       <script src="/javascripts/checkout.js"></script>
   </body>
 </html>

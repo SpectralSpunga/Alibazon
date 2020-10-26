@@ -1,4 +1,4 @@
-const Service = require('../services/authService')
+const Auth = require('../services/auth/index')()
 
 function registerPage(req, res, next){
     if(req.cookies.user.user) return res.redirect('/category/mens')
@@ -16,7 +16,7 @@ async function logout(req, res, next){
 }
 
 async function postSignUp(req, res, next){
-    let user = await Service.authSignUp(req.body);
+    let user = await Auth.signUp(req.body);
     if(user.user){
         res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens');
@@ -27,7 +27,7 @@ async function postSignUp(req, res, next){
 }
 
 async function postSignIn(req, res, next){
-    let user = await Service.authSignIn(req.body);
+    let user = await Auth.signIn(req.body);
     if(user.user){
         res.cookie('user', user, { httpOnly: true });
         return res.redirect('/category/mens')
