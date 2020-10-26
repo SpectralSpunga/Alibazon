@@ -1,34 +1,31 @@
+import { Req } from "./requests.js";
+const AJAX = Req()
+
 const noStyle = { "color": "black" }
 const style = { "color": "crimson" }
 let product_id = $('.addToCart').attr('value');
 let variants = '';
 
 async function loadVariants(){
-    let headers = { "Content-Type":"application/json" }
-    let datad = await axios({
-        url: `/productById/${product_id}`,
-        method: 'get',
-        headers
-    });
-
-    variants = datad.data.product[0].variants;
+    let data = await AJAX.loadProduct(product_id)
+    variants = data.variants;
     check()
 }
 
 $('.description-p').html($('.description-p').text())
 
-function changeColor(str){
-    $(str).on('click', function(e){
-        $(str).each(function(index, elem){
-            $(elem).css(noStyle)
+function changeColor(arrOfClasses){
+    arrOfClasses.forEach( (elem, i) => {
+        $(elem).on('click', (e) => {
+            $(elem).each((index, val) => $(val).css(noStyle) )
+            $(e.target).css(style)
         })
-        const btn = e.target;
-        $(btn).css(style)
     })
 }
 
 function check(){
     const arr = $('button[style*="color: crimson"]');
+    console.dir(arr)
     let arr2= {};
     $(arr).each((i, elem)=>{
         arr2[elem.name] =  elem.value
@@ -80,10 +77,7 @@ $('.colorVariant').first().css(style)
 $('.widthVariant').first().css(style)
 $('.accessorySizeVariant').first().css(style)
 
-changeColor('.sizeVariant')
-changeColor('.colorVariant')
-changeColor('.widthVariant')
-changeColor('.accessorySizeVariant')
+changeColor(['.sizeVariant', '.colorVariant', '.widthVariant', '.accessorySizeVariant'])
 
 loadVariants()
 

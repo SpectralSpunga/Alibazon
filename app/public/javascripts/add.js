@@ -1,48 +1,30 @@
-$('.addFromWishlist').on('click', async (e)=>{
-    let q = $(e.target).parent().parent().find($('.quantity p'));
-    let quantity = parseInt($(q).text());
-    let product_id = $(e.target).parent().parent().attr('value');
-    let variant_id = $(e.target).parent().parent().attr('id');
-    let headers = { "Content-Type":"application/json" }
+import { Req } from "./requests.js"
+const AJAX = Req();
 
-    await axios({
-        url: `/cart/add`,
-        method: 'post',
-        data: {product_id, variant_id, quantity},
-        headers
-    });
+function add(selector){
+    $(selector).on('click', async (e)=>{
+        //getting product info
+        let $quantity = $(e.target).parent().parent().find($('.quantity p'));
+        let quantity = parseInt($($quantity).text());
+        let product_id = e.target.value;
+        let variant_id = e.target.id;
+        let url = ''
+    
+        if($(e.target).attr('class') === "addToCart") url = "cart"
+        else if($(e.target).attr('class') === "addToWishlist") url = "wishlist"
+    
+        //adding item to cart || wishlist
+        await AJAX.addItem(product_id, variant_id, quantity, url)
 
-    await axios({
-        url: `/wishlist/removeItem`,
-        method: 'post',
-        data: {product_id, variant_id},
-        headers
-    });
-
-    $(e.target).parent().parent().remove();
-})
-
-$('.product-btn').on('click', async (e)=>{
-    let quantity = parseInt($('.quantity p').text());
-    let product_id = e.target.value;
-    let variant_id = e.target.id;
-    let headers = { "Content-Type":"application/json" }
-    let url = ''
-    console.log(product_id, variant_id, quantity)
-
-    if($(e.target).attr('class') === "addToCart" ) url = "/cart/add"
-    else if($(e.target).attr('class') === "addToWishlist") url = "/wishlist/add"
-
-    await add(product_id, variant_id, quantity, url, headers)
-
-    $(e.target).attr('disabled', 'true')
-})
-
-async function add(product_id, variant_id, quantity, url, headers){
-    await axios({
-        url,
-        method: 'post',
-        data: {product_id, variant_id, quantity},
-        headers
-    });
+        //if add from wishlist --> remove item from wihslist
+        if($('title').text() === "Wishlist"){
+            await AJAX.removeItem(product_id, variant_id, "wishlist");
+            $(e.target).parent().parent().remove();
+        }
+        else $(e.target).attr('disabled', 'true')
+    })
 }
+
+add('.product-btn');
+
+export { add }

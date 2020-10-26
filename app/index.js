@@ -7,8 +7,6 @@ app.use(require('cookie-parser')())
 app.use(require('./middlewares/secretKeyAdder').secretKeyAdder)
 
 const Sentry = require("@sentry/node");
-// or use es6 import statements
-// import * as Sentry from '@sentry/node';
 
 Sentry.init({
   dsn: "https://62beff43ef9b4db8a3d56b7a44356062@o459000.ingest.sentry.io/5457482",
