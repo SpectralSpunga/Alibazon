@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { API } = require('../../config').config;
+const Wishlist = require('./index')()
 
 /**
  * Adds item to the wishlist
@@ -29,10 +30,10 @@ async function addItem(token, body){
         return 'Successfully added item';
     } catch(err){
         if(err.response && err.response.data.error === 'This Item is already in your wishlist'){
-            let item = await getItem(token, body.variantId);
+            let item = await Wishlist.getItem(token, body.variantId);
             if(item instanceof Error) throw new Error()
             body.quantity += item.quantity;
-            await changeQuantity(token, body)
+            await Wishlist.changeQuantity(token, body)
             console.log("added")
             return 'Successfully added item'
         }

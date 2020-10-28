@@ -4,13 +4,14 @@
   <body>
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
-      <main>
+      <main class="category">
 
-        <h2><%= mainCategory %></h2>
+        <h1><%= mainCategory %></h1>
         <p><%= description %></p>
 
         <% category.forEach(function(elem){ %>
-            <h3><%= elem.name %></h3>
+          <div class="elem">
+            <h2><%= elem.name %></h2>
             <img class="img-category" src="/images/<%= elem.image %>" alt="<%= elem.id %>">
             <p><%= elem.page_description %></p>
 
@@ -23,7 +24,7 @@
                 <button>VIEW PRODUCTS</button>
               </a>
             <% } %>
-            <hr>
+          </div>
         <% }); %>
 
       </main>

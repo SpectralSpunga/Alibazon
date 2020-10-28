@@ -9,16 +9,17 @@ const Orders = require('../orders/index')();
  */
 async function get(token){
     let cart = await Cart.get(token);
-    let profileCart = cart.hasOwnProperty('items') ? cart.items.length: 0;
+    if(cart === "Invalid Token") return new Error(cart)
+    
+    let profileCart = cart.hasOwnProperty('items') ? cart.items.length : 0;
 
     let wishlist = await Wishlist.get(token);
-    let profileWishlist = wishlist.hasOwnProperty('items') ? wishlist.items.length: 0;
+    let profileWishlist = wishlist.hasOwnProperty('items') ? wishlist.items.length : 0;
 
     let orders = await Orders.get(token)
-    let profileOrders = orders instanceof String ? 0: orders
+    let profileOrders = orders[0].hasOwnProperty('items') ? orders : 0
 
     return { profileCart, profileWishlist, profileOrders };
-    
 }
 
 module.exports = get;

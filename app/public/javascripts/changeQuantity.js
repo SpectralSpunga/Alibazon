@@ -1,4 +1,5 @@
 import { Req } from "./requests.js";
+import totalCart from "./total.js"
 const AJAX = Req();
 
 $('.quantity').on('click', async (e)=>{
@@ -31,6 +32,7 @@ $('.quantity').on('click', async (e)=>{
             if(quantity === 1){
                 await AJAX.removeItem(product_id, variant_id, url);
                 $(e.target).parent().parent().parent().remove();
+                totalCart()
                 return undefined;
             }
             quantity -= 1;
@@ -40,5 +42,6 @@ $('.quantity').on('click', async (e)=>{
             $($total).text(`$${(total - price).toFixed(2)}`)
             $(e.target).next().text(quantity)
         }
+        totalCart()
     }
 })

@@ -1,87 +1,97 @@
 import { Req } from "./requests.js";
-const AJAX = Req()
 
-const noStyle = { "color": "black" }
-const style = { "color": "crimson" }
-let product_id = $('.addToCart').attr('value');
-let variants = '';
+(async function productPage(){
+    const AJAX = Req()
+    //convert string with html to html
+    $('.description-p').html($('.description-p').text())
 
-async function loadVariants(){
-    let data = await AJAX.loadProduct(product_id)
-    variants = data.variants;
-    check()
-}
+    //global variables
+    const no_style = { "background-color":  "#F2F2F2",
+    "color": "#F24162" }
+    const style = { "background-color":  "#F24162",
+        "color": "#F2F2F2" }
+    const product_id = $('.addToCart').attr('value');
+    //load product
+    let product = await AJAX.loadProduct(product_id); 
 
-$('.description-p').html($('.description-p').text())
+    //define default variants and check
+    $('.sizeVariant').first().css(style)
+    $('.colorVariant').first().css(style)
+    $('.widthVariant').first().css(style)
+    $('.accessorySizeVariant').first().css(style)
 
-function changeColor(arrOfClasses){
-    arrOfClasses.forEach( (elem, i) => {
-        $(elem).on('click', (e) => {
-            $(elem).each((index, val) => $(val).css(noStyle) )
+    $('.sizeVariant').first().addClass('checked')
+    $('.colorVariant').first().addClass('checked')
+    $('.widthVariant').first().addClass('checked')
+    $('.accessorySizeVariant').first().addClass('checked')
+    checkVariant()
+
+    //change style of clicked variant and check if variant is available
+    $('.product-text').on('click', (e)=>{
+        if( ['color', 'width', 'size'].includes($(e.target).attr('name')) ){
+            $(e.target).parent().children().css(no_style)
+            $(e.target).parent().find('p').css({"color":"black"})
+            $(e.target).parent().children().removeClass('checked')
             $(e.target).css(style)
-        })
-    })
-}
-
-function check(){
-    const arr = $('button[style*="color: crimson"]');
-    console.dir(arr)
-    let arr2= {};
-    $(arr).each((i, elem)=>{
-        arr2[elem.name] =  elem.value
+            $(e.target).addClass('checked')
+            checkVariant()
+        }
     })
 
-    let objArr = Object.keys(arr2).length;
-    let count = 0;
+    //check variant for availability
+    function checkVariant(){
+        const arr = $('.checked');
+        let variantObj = {};
+        $(arr).each((i, elem)=> variantObj[elem.name] = elem.value )
+        const variantArr = Object.values(variantObj)
 
-    for(let variant of variants){
-        for(let prop in variant.variation_values){
-            if(variant.variation_values[prop] === arr2[prop]) count++
-            else count = 0
+        const variants = product.variants;
 
-            if(count === objArr) {
-                $('.price').text(`Price: $${variant.price}`);
+        for(let elem of variants){
+            const arr0 = Object.values(elem.variation_values)
+            let temp = compare(arr0, variantArr);
+            if(temp) {
+                $('.price').html("Price: <b>$" + elem.price + "</b>");
                 $('.addToCart').removeAttr('disabled')
                 $('.addToWishlist').removeAttr('disabled')
-                $('.addToCart').attr('id', variant.product_id)
-                $('.addToWishlist').attr('id', variant.product_id)
+                $('.addToCart').attr('id', elem.product_id)
+                $('.addToWishlist').attr('id', elem.product_id);
                 return 0;
-            };
-        }
+            }
+            else{
+                $('.price').html(`<b>SOLD OUT</b>`);
+                $('.addToCart').attr('disabled', 'true');
+                $('.addToCart').attr('id', '');
+                $('.addToWishlist').attr('id', '');
+            }
+        };
     }
-    $('.price').text('SOLD OUT');
-    $('.addToCart').attr('disabled', 'true')
-    return 0;
-}
 
-function checkVariant(str){
-    $(str).on('click', check)
-}
+    //compare two arrays
+    function compare(arr1, arr2){
+        let count = 0;
+        for(let elem of arr1){
+            if(arr2.includes(elem)) count++
+            else count = 0
 
-$('.minus').on('click', ()=>{
-    let q = parseInt($('.quantity p').text());
-    if(q > 1) $('.quantity p').text(--q)
-    $('.addToCart').removeAttr('disabled')
-    $('.addToWishlist').removeAttr('disabled')
-})
+            if(count === arr1.length) return true
+        }
+        return false;
+    }
 
-$('.plus').on('click', ()=>{
-    let q = parseInt($('.quantity p').text());
-    $('.quantity p').text(++q)
-    $('.addToCart').removeAttr('disabled')
-    $('.addToWishlist').removeAttr('disabled')
-})
+    //decrement quantity
+    $('.minus').on('click', ()=>{
+        let q = parseInt($('.quantity p').text());
+        if(q > 1) $('.quantity p').text(--q)
+        $('.addToCart').removeAttr('disabled')
+        $('.addToWishlist').removeAttr('disabled')
+    })
 
-$('.sizeVariant').first().css(style)
-$('.colorVariant').first().css(style)
-$('.widthVariant').first().css(style)
-$('.accessorySizeVariant').first().css(style)
-
-changeColor(['.sizeVariant', '.colorVariant', '.widthVariant', '.accessorySizeVariant'])
-
-loadVariants()
-
-checkVariant('.sizeVariant')
-checkVariant('.colorVariant')
-checkVariant('.widthVariant')
-checkVariant('.accessorySizeVariant')
+    //increment quantity
+    $('.plus').on('click', ()=>{
+        let q = parseInt($('.quantity p').text());
+        $('.quantity p').text(++q)
+        $('.addToCart').removeAttr('disabled')
+        $('.addToWishlist').removeAttr('disabled')
+    })
+})()

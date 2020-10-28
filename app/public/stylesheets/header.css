@@ -4,7 +4,7 @@ body{
 }
 
 header{
-    background-color: rgb(90, 20, 220);
+    background-color: #1B3C59;
     color: whitesmoke;
 }
 
@@ -18,7 +18,7 @@ i{
 
 a, .bread{
     text-decoration: none;
-    color: rgb(20, 220, 160);
+    color: #F24162;
 }
 
 a:hover{
@@ -26,9 +26,9 @@ a:hover{
 }
 
 .bread:before{
-    padding: 4px;
+    padding: 0px;
     color: black;
-    content: "/\00a0";
+    content: ">\00a0";
 }
 
 #header-div{
@@ -39,7 +39,7 @@ a:hover{
     margin:auto;
     max-width: 1000px;
     width: 90%;
-    background-color: rgb(90, 20, 220);
+    background-color: #1B3C59;
 }
 
 h1{
@@ -82,7 +82,7 @@ h3{
     border: none;
     cursor: pointer;
     padding:5px;
-    background-color: rgb(180, 180, 180);
+    background-color: #F24162;
 }
 
 #btns-div{
@@ -92,6 +92,10 @@ h3{
     align-items: center;
     max-width: 500px;
     width: 98%;
+}
+
+#btns-div button{
+    font-size: 15px;
 }
 
 #btns-div p{
@@ -112,7 +116,7 @@ h3{
 }
 
 .cat{
-    color: rgb(20, 220, 160);
+    color: #F24162;
 }
 
 #breadcrumbs{
@@ -127,13 +131,4 @@ hr{
     width: 1000px;
     margin: auto;
     margin-top: 10px;
-}
-
-img{
-    width: 100%;
-    height: auto;
-}
-
-footer{
-    text-align: center;
 }

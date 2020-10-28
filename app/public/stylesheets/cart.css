@@ -1,4 +1,5 @@
 table{
+    table-layout: fixed;
     text-align: center;
     border-collapse: collapse;
     margin: auto;
@@ -6,14 +7,17 @@ table{
     width: 900px;
 }
 
-.img-cart{
-    width: 50px;
+thead{
+    margin-bottom: 10px;
 }
 
-td{
-    border-bottom: 1px solid black;
-    padding: 10px;
-    background-color:rgb(223, 219, 230);
+table .product-cart{
+    margin-bottom: 50px;
+    border-radius: 5px;
+}
+
+table .product-cart td{
+    padding:5px;
 }
 
 #cart-total{
@@ -22,7 +26,8 @@ td{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color:rgb(204, 192, 228);
+    background-color: #F2F2F2;
+    box-shadow: 5px 5px 5px #e0e0e0;
     max-width: 200px;
     margin: auto;
     margin-bottom: 20px;
@@ -31,4 +36,48 @@ td{
 
 #cart-total h2{
     margin: 0px;
+}
+
+.trash i{
+    cursor: pointer;
+    color:  #1B3C59;
+}
+
+.trash i:hover{
+    color:  #F24162;
+}
+
+.img-cart{
+    width: 80px;
+}
+
+.img-cart img{
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+}
+
+/* .cart-wish .quantity{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cart-wish .quantity p{
+    margin-bottom: 5px;
+} */
+
+.cart-wish .quantity{
+    width: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+}
+
+.cart-wish .quantity button{
+   width: 25px;
 }

@@ -4,7 +4,7 @@
   <body>
       <%- include('./header') %>
       <%- include('./breadcrumbs') %>
-      <main class="main-grid">
+      <main class="catalog">
 
 
         <% products.forEach(function(elem){ %>
@@ -17,9 +17,9 @@
                     <div class="product-text">
                         <p><%= elem.short_description %></p>
                         <div class="product-btn">
-                            <p>Price: $ <%= elem.price %></p>
+                            <p>Price: <b>$<%= elem.price %></b></p>
                             <a href="/products/<%= elem.primary_category_id %>/<%= elem.id %>">
-                                <button>MORE INFO</button>
+                                <button class="more-info">MORE INFO</button>
                             </a>
                             <% if(user === "none") {%>
                                 <a href="/cart"><button>ADD TO CART</button></a>
@@ -40,7 +40,6 @@
 
 
       </main>
-      <hr>
       <%- include('./footer') %>
       <script type="module" src='/javascripts/add.js'></script>
       <script type="module" src='/javascripts/moreProducts.js'></script>

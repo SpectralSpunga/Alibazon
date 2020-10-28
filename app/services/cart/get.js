@@ -34,11 +34,8 @@ async function get(token){
 
         return cart.data;
     } catch(err){
-        if(err.response === undefined) {
-            console.log("err.response is undefined")
-            await get(token)
-        }
-        console.log(err)
+        if(err.response === undefined) await get(token)
+        
         if(err.response) return err.response.data.error
     }
 }

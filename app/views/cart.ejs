@@ -5,12 +5,12 @@
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
 
-      <main>
+      <main class="cart-wish">
         <% if(result === 'no items') {%>
             <h1>No items in cart</h1>
         <% } else {%>
         <table>
-            <tr>
+            <thead>
                 <th></th>
                 <th>Product</th>
                 <th>Price</th>
@@ -19,7 +19,8 @@
                 <th>Quantity</th>
                 <th>Total</th>
                 <th></th>
-            </tr>
+            </thead>
+            <tbody>
             <% result.items.forEach(function(elem){ %>
                 <tr class="product-cart" value="<%= elem.productId %>" id="<%= elem.variant.product_id %>">
                     <td>
@@ -42,6 +43,7 @@
                     <td class="trash"><i class="fas fa-trash"></i></td>
                 </tr>
             <% }); %>
+            </tbody>
         </table>
         <% } %>
 

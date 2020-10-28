@@ -1,4 +1,5 @@
 import { Req } from "./requests.js";
+import total from "./total.js";
 const AJAX = Req()
 const $arr = $('.product-cart');
 
@@ -11,7 +12,6 @@ let products = $arr.map( (i, elem) => {
 
 products.each( async (index, variant) => {
     let product = await AJAX.loadProduct(variant.productId);
-    if(product instanceof Error) product = await AJAX.loadProduct(variant.productId);
 
     //add name and category
     $($arr[index]).find('.product-name').text(product.name);
@@ -48,4 +48,6 @@ products.each( async (index, variant) => {
     let price = parseFloat($($arr[index]).find('.price').text().replace('$', ''));
     let quantity = parseInt($($arr[index]).find('.product-quantity').text());
     $($arr[index]).find('.total').text(`$${(price * quantity).toFixed(2)}`)
+
+    if(['Cart', 'Wishlist'].includes($('title').text())) total()
 })

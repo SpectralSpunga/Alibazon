@@ -5,18 +5,18 @@
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
 
-      <main>
+      <main class="profile">
         <div id="profile">
             <h3>Profile:</h3>
-            <p>Email: <%= user.user.email %></p>
-            <p>Registered: <%= date %></p>
+            <p><b>Email:</b> <%= user.user.email %></p>
+            <p><b>Registered:</b> <%= date %></p>
         </div>
         <div id="cart-wish">
             <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i><sub><%= cart %></sub></button></a>
             <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
         </div>
 
-        <% if(orders === 'No orders') {%>
+        <% if(orders === 0) {%>
           <h2>No orders</h2>
         <% } else {%>
           <% orders.forEach(function(elem){ %>

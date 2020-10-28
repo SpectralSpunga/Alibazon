@@ -24,6 +24,8 @@ async function get(token){
 
         return wishlist.data;
     } catch(err){
+        if(err.response === undefined) await get(token)
+        
         if(err.response) return err.response.data.error
     }
 }

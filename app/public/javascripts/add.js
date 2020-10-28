@@ -3,6 +3,7 @@ const AJAX = Req();
 
 function add(selector){
     $(selector).on('click', async (e)=>{
+        if(!['addToCart', 'addToWishlist'].includes($(e.target).attr('class'))) return;
         //getting product info
         let $quantity = $(e.target).parent().parent().find($('.quantity p'));
         let quantity = parseInt($($quantity).text());

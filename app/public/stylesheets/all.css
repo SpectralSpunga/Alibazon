@@ -1,0 +1,50 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+body{
+    background-color: #F2F2F2;
+}
+
+main{
+    max-width: 1000px;
+    width: 95%;
+    min-width: 100px;
+    min-height: 90vh;
+}
+
+button{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 5px;
+    border-radius: 3px;
+    background-color:  #F24162;
+    color: #F2F2F2;
+    transition: background-color .2s, color .2s, box-shadow .2s;
+}
+
+button:hover{
+    background-color:  #F2F2F2;
+    color: #F24162;
+}
+
+#footer{
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #1B3C59;
+    color: #F2F2F2;
+}
+
+footer{
+    text-align: center;
+}
+
+/* Color Theme Swatches in Hex */
+.color-theme_perfil-22-1-hex { color: #F24162; }
+.color-theme_perfil-22-2-hex { color: #8C3A58; }
+.color-theme_perfil-22-3-hex { color: #120826; }
+.color-theme_perfil-22-4-hex { color: #1B3C59; }
+.color-theme_perfil-22-5-hex { color: #F2F2F2; }

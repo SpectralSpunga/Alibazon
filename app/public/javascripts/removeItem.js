@@ -1,4 +1,5 @@
 import { Req } from './requests.js'
+import totalCart from './total.js';
 const AJAX = Req()
 
 $('.trash').on('click', async (e)=>{
@@ -14,10 +15,6 @@ $('.trash').on('click', async (e)=>{
         $(e.target).parent().parent().remove();
 
         //if cart change total
-        if(url === "cart"){
-            let arr = $('.total').text().split('$').shift();
-            let cartTotal = arr.reduce((acc, elem)=> parseFloat(acc) + parseFloat(elem));
-            $('#cart-total h3').text(`$${cartTotal.toFixed(2)}`)
-        }
     }
+    totalCart()
 })

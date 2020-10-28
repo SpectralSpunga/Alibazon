@@ -13,6 +13,15 @@ module.exports = function(app) {
     app.use(require('./wishlist'))
     app.use(require('./checkout'))
     app.use(require('./orders'))
+
+    app.use('/', (req, res) => {
+      res.render('NotFound', 
+      {
+        title: "Not Found", 
+        user: req.cookies.user.user ? req.cookies.user : "none", 
+        links:[{link:'', ap:''}]
+      })
+    });
     
     // fallthrough error handler
     app.use(function onError(err, req, res, next) {
