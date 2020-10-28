@@ -1,12 +1,12 @@
 /**
  * @jest-environment node
  */
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Wishlist = require('../../app/services/wishlist/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
 describe('getWishlist', ()=>{
     test('should return wishlist of the user with valid token', async ()=>{
-        const wishlist = await Services.getWishlist(token)
+        const wishlist = await Wishlist.get(token)
         
         if(wishlist !== 'There is no Wishlist created for this user'){
             expect(wishlist).toBeInstanceOf(Object)
@@ -16,7 +16,7 @@ describe('getWishlist', ()=>{
     })
 
     test("shouldn't return wishlist of the user with invalid token", async ()=>{
-        const wishlist = await Services.getWishlist(token + "peepeepoopoo")
+        const wishlist = await Wishlist.get(token + "peepeepoopoo")
 
         expect(wishlist).toEqual('Invalid Token')
     })

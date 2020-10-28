@@ -2,18 +2,18 @@
  * @jest-environment node
  */
 const { secretKey } = require('../../app/config').config
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Cart = require('../../app/services/cart/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
-describe('addItemToCart', ()=>{
+describe('Cart addItem', ()=>{
     test('should add item to cart with valid arguments', async ()=>{
         let body = {
             secretKey,
             "productId": "25565189",
             "variantId": "701643540037",
-            "quantity":2
+            "quantity": 2
         }
-        const cart = await Services.addItemToCart(token, body)
+        const cart = await Cart.addItem(token, body)
 
         expect(cart).toEqual('Successfully added item')
     })
@@ -39,9 +39,9 @@ describe('addItemToCart', ()=>{
             "variantId": "7",
             "quantity":2
         }
-        const cart1 = await Services.addItemToCart(token + "peepeepoopoo", body1)
-        const cart3 = await Services.addItemToCart(token, body3)
-        const cart4 = await Services.addItemToCart(token, body4)
+        const cart1 = await Cart.addItem(token + "peepeepoopoo", body1)
+        const cart3 = await Cart.addItem(token, body3)
+        const cart4 = await Cart.addItem(token, body4)
 
         expect(cart1).toBeInstanceOf(Error)
         expect(cart1.response.data.error).toEqual("Invalid Token")

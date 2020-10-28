@@ -2,10 +2,10 @@
  * @jest-environment node
  */
 
-const Services = require('../../app/services/allServices')
+const Auth = require('../../app/services/auth/index')()
 const { secretKey } = require('../../app/config').config
 
-describe('authSignUp', ()=>{
+describe('signUp', ()=>{
     //------------------CAN BE PASSED ONLY WITH NEW USER------------------
     //
     // test("should register new user if he doesn't exist yet", async ()=>{
@@ -15,7 +15,7 @@ describe('authSignUp', ()=>{
     //         "email":"testemssail@gm.com",
     //         "password":"1234sssios"
     //     }
-    //     const result = await Services.authSignUp(body)
+    //     const result = await Auth.signUp(body)
 
     //     expect(result).toBeInstanceOf(Object);
     //     expect(result).toHaveProperty("user");
@@ -28,23 +28,10 @@ describe('authSignUp', ()=>{
             "email":"testemail@gmaillaile.com",
             "password":"123456789qqq"
         }
-        const result = await Services.authSignUp(body)
+        const result = await Auth.signUp(body)
 
         expect(result.response.data).toBeDefined();
         expect(result.response.data).toHaveProperty('error', "User already exists");
-    })
-
-    test("shouldn't register new user if secretKey is invalid", async ()=>{
-        let body = {
-            "secretKey": "peepeepoopoo",
-            "name":"test_name228",
-            "email":"testemail@gmaillaile.com",
-            "password":"123456789qqq"
-        }
-        const result = await Services.authSignUp(body)
-
-        expect(result.response.data).toBeDefined();
-        expect(result.response.data).toHaveProperty('error', "Invalid Secret Key");
     })
 
     test("shouldn't register new user if one of the fields is empty", async ()=>{
@@ -69,9 +56,9 @@ describe('authSignUp', ()=>{
             "password":""
         }
 
-        const result1 = await Services.authSignUp(body1)
-        const result2 = await Services.authSignUp(body2)
-        const result3 = await Services.authSignUp(body3)
+        const result1 = await Auth.signUp(body1)
+        const result2 = await Auth.signUp(body2)
+        const result3 = await Auth.signUp(body3)
 
         expect(result1).toBeInstanceOf(Error);
         expect(result2).toBeInstanceOf(Error);

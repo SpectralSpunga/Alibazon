@@ -2,19 +2,19 @@
  * @jest-environment node
  */
 const { secretKey } = require('../../app/config').config
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Cart = require('../../app/services/cart/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
 describe('removeItemFromCart', ()=>{
     //---------CAN BE PASSED ONLY WITH NEW BODY EACH TIME----------
     // test("should remove item from cart if item is in cart", async ()=>{
     //     let body = {
     //         secretKey,
-    //         "productId": "25518241",
-    //         "variantId": "701642838852"
+    //         "productId": "21736758",
+    //         "variantId": "883360541259"
     //     }
 
-    //     const cart = await Services.removeItemFromCart(token, body)
+    //     const cart = await Cart.removeItem(token, body)
 
     //     expect(cart).toBeInstanceOf(Object)
     //     expect(cart).toHaveProperty('userId')
@@ -45,10 +45,10 @@ describe('removeItemFromCart', ()=>{
             "productId": "21736758",
             "variantId": "883360541259"
         }
-        const cart1 = await Services.removeItemFromCart(token + "peepeepoopoo", body1)
-        const cart3 = await Services.removeItemFromCart(token, body3)
-        const cart4 = await Services.removeItemFromCart(token, body4)
-        const cart5 = await Services.removeItemFromCart(token, body5)
+        const cart1 = await Cart.removeItem(token + "peepeepoopoo", body1)
+        const cart3 = await Cart.removeItem(token, body3)
+        const cart4 = await Cart.removeItem(token, body4)
+        const cart5 = await Cart.removeItem(token, body5)
 
         expect(cart1).toBeInstanceOf(Error)
         expect(cart1.response.data.error).toEqual("Invalid Token")

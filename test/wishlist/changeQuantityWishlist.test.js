@@ -2,19 +2,19 @@
  * @jest-environment node
  */
 const { secretKey } = require('../../app/config').config
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Wishlist = require('../../app/services/wishlist/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
-describe('changeQuantityWishlist', ()=>{
+describe('Wishlist changeQuantity', ()=>{
     test("should change quantity of item in wishlist with valid arguments", async ()=>{
         let body = {
             secretKey,
-            "productId": "34736758",
-            "variantId": "883360541488",
-            "quantity" : 25
-          }
+            "productId": "25565189",
+            "variantId": "701643540037",
+            "quantity": 20
+        }
 
-        const wishlist = await Services.changeQuantityWishlist(token, body)
+        const wishlist = await Wishlist.changeQuantity(token, body)
 
         expect(wishlist).toBeInstanceOf(Object)
         expect(wishlist).toHaveProperty('userId')
@@ -49,10 +49,10 @@ describe('changeQuantityWishlist', ()=>{
             "quantity":2
         }
 
-        const wishlist1 = await Services.changeQuantityWishlist(token + "peepeepoopoo", body1)
-        const wishlist3 = await Services.changeQuantityWishlist(token, body3)
-        const wishlist4 = await Services.changeQuantityWishlist(token, body4)
-        const wishlist5 = await Services.changeQuantityWishlist(token, body5)
+        const wishlist1 = await Wishlist.changeQuantity(token + "peepeepoopoo", body1)
+        const wishlist3 = await Wishlist.changeQuantity(token, body3)
+        const wishlist4 = await Wishlist.changeQuantity(token, body4)
+        const wishlist5 = await Wishlist.changeQuantity(token, body5)
 
         expect(wishlist1).toBeInstanceOf(Error)
         expect(wishlist1.response.data.error).toEqual("Invalid Token")

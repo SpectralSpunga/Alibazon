@@ -1,22 +1,21 @@
 /**
  * @jest-environment node
  */
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Profile = require('../../app/services/profile/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
-describe('getProfile', ()=>{
+describe('Profile get', ()=>{
     test('should return profile of the user with valid token', async ()=>{
-        const profile = await Services.getProfile(token)
+        const profile = await Profile.get(token)
 
         expect(profile).toBeInstanceOf(Object)
         expect(profile).toHaveProperty('profileCart')
-        expect(profile).toHaveProperty('orders')
-        
+        expect(profile).toHaveProperty('profileOrders')
     })
 
     test("shouldn't return profile of the user with invalid token", async ()=>{
-        const profile = await Services.getProfile(token + "peepeepoopoo")
+        const profile = await Profile.get(token + "peepeepoopoo")
 
-        expect(profile.response.data.error).toEqual('Invalid Token')
+        expect(profile).toBeInstanceOf(Error)
     })
 })

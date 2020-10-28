@@ -2,14 +2,13 @@
  * @jest-environment node
  */
 const { secretKey } = require('../../app/config').config
-const Services = require('../../app/services/allServices')
-//const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
-const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTE3YWYyNjZmZDdjMDAyNGE4OTIzMyIsImlhdCI6MTYwMzM2OTcxNCwiZXhwIjoxNjAzNDU2MTE0fQ.cSvbHRhhTo9wZs-C_9SUL71JJzLzutDhDDQYiWQVq4c"
+const Orders = require('../../app/services/orders/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
 describe('createOrder', ()=>{
     let body = {
         secretKey,
-        paymentId: '121212212',
+        paymentId: 'test_order',
         address: 'some address',
         items: [
             {
@@ -28,16 +27,17 @@ describe('createOrder', ()=>{
         ]
     }
 
-    test('should create a new order of the user with valid token', async ()=>{
-        const order = await Services.createOrder(token, body)
+    //--------DELETES CART-------------
+    // test('should create a new order of the user with valid token', async ()=>{
+    //     const order = await Orders.create(token, body)
         
-        expect(order).toBeInstanceOf(Object)
-        expect(order).toHaveProperty('address')
-        expect(order).toHaveProperty('paymentId')
-    })
+    //     expect(order).toBeInstanceOf(Object)
+    //     expect(order).toHaveProperty('address')
+    //     expect(order).toHaveProperty('paymentId')
+    // })
 
     test("shouldn't add item to cart with invalid argument", async ()=>{
-        const order = await Services.createOrder(token + "peepeepoopoo", body)
+        const order = await Orders.create(token + "peepeepoopoo", body)
 
         expect(order).toBeInstanceOf(Error)
         expect(order.response.data.error).toEqual("Invalid Token")

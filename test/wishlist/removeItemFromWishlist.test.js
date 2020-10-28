@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 const { secretKey } = require('../../app/config').config
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Wishlist = require('../../app/services/wishlist/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
 describe('removeItemFromWishlist', ()=>{
     //---------CAN BE PASSED ONLY WITH NEW BODY EACH TIME----------
@@ -14,7 +14,7 @@ describe('removeItemFromWishlist', ()=>{
     //         "variantId": "701642838852"
     //     }
 
-    //     const wishlist = await Services.removeItemFromWishlist(token, body)
+    //     const wishlist = await Wishlist.removeItem(token, body)
 
     //     expect(wishlist).toBeInstanceOf(Object)
     //     expect(wishlist).toHaveProperty('userId')
@@ -45,10 +45,10 @@ describe('removeItemFromWishlist', ()=>{
             "productId": "21736758",
             "variantId": "883360541259"
         }
-        const wishlist1 = await Services.removeItemFromWishlist(token + "peepeepoopoo", body1)
-        const wishlist3 = await Services.removeItemFromWishlist(token, body3)
-        const wishlist4 = await Services.removeItemFromWishlist(token, body4)
-        const wishlist5 = await Services.removeItemFromWishlist(token, body5)
+        const wishlist1 = await Wishlist.removeItem(token + "peepeepoopoo", body1)
+        const wishlist3 = await Wishlist.removeItem(token, body3)
+        const wishlist4 = await Wishlist.removeItem(token, body4)
+        const wishlist5 = await Wishlist.removeItem(token, body5)
 
         expect(wishlist1).toBeInstanceOf(Error)
         expect(wishlist1.response.data.error).toEqual("Invalid Token")

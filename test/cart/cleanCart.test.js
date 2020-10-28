@@ -1,18 +1,18 @@
 /**
  * @jest-environment node
  */
-const Services = require('../../app/services/allServices')
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODE3MjM3NjVkYzRiMDAyNDlmNjU1MyIsImlhdCI6MTYwMzI4ODI1NSwiZXhwIjoxNjAzMzc0NjU1fQ.qSyGQftv7WPqCBnFVPxJtTkT5qKEGgGfy-EnlGRNV_k";
+const Cart = require('../../app/services/cart/index')()
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTk5OTJjYzg1ZmNlMDAyNGQ2ZTJhOSIsImlhdCI6MTYwMzkwMTc0MCwiZXhwIjoxNjAzOTg4MTQwfQ.efpRMOIQAf5ZAlH2jqj1Rq01gCkR6AiRFR42NffVB3g';
 
 //--------MAKE A CART AFTER THIS TEST TO TEST OTHER CALLS----------
 describe('cleanCart', ()=>{
     // test("should clean cart when payment succeeded", async ()=>{
-    //     const cart = await Services.cleanCart(token)
+    //     const cart = await Cart.clean(token)
     //     expect(cart).toEqual('Cart has been cleaned')
     // })
 
     test("shouldn't clean cart with invalid token", async ()=>{
-        const cart = await Services.cleanCart(token + "peepeepoopoo")
+        const cart = await Cart.clean(token + "peepeepoopoo")
         
         expect(cart).toBeInstanceOf(Error)
     })

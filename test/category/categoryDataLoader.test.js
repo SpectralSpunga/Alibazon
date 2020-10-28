@@ -3,13 +3,13 @@
  */
 
 //const { secretKey } = require('../app/config').config
-const Services = require('../../app/services/allServices')
+const Category = require('../../app/services/category/index')()
 
-describe('categoryDataLoader', ()=>{
+describe('Category dataLoader', ()=>{
     test('should return OBJECT with valid category', async ()=>{
-        const mens = await Services.categoryDataLoader('mens')
-        const mensClothing = await Services.categoryDataLoader('mens-clothing')
-        const mensClothingJackets = await Services.categoryDataLoader('mens-clothing-jackets')
+        const mens = await Category.dataLoader('mens')
+        const mensClothing = await Category.dataLoader('mens-clothing')
+        const mensClothingJackets = await Category.dataLoader('mens-clothing-jackets')
 
         expect(mens).toBeInstanceOf(Object);
         expect(mensClothing).toBeInstanceOf(Object);
@@ -20,9 +20,9 @@ describe('categoryDataLoader', ()=>{
     })
 
     test('should return ERROR with invalid category', async ()=>{
-        const mens = await Services.categoryDataLoader('menssss')
-        const mensClothing = await Services.categoryDataLoader('mensas-clothing')
-        const mensClothingJackets = await Services.categoryDataLoader('aasmens-clothing-jackets')
+        const mens = await Category.dataLoader('menssss')
+        const mensClothing = await Category.dataLoader('mensas-clothing')
+        const mensClothingJackets = await Category.dataLoader('aasmens-clothing-jackets')
 
         expect(mens).toBeInstanceOf(Error);
         expect(mensClothing).toBeInstanceOf(Error);
