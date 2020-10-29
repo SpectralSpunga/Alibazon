@@ -12,6 +12,9 @@ main{
     max-width: 1000px;
     width: 95%;
     min-width: 100px;
+}
+
+.container{
     min-height: 90vh;
 }
 

@@ -5,55 +5,57 @@
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
 
-      <main class="profile">
-        <div id="profile">
-            <h3>Profile:</h3>
-            <p><b>Email:</b> <%= user.user.email %></p>
-            <p><b>Registered:</b> <%= date %></p>
-        </div>
-        <div id="cart-wish">
-            <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i><sub><%= cart %></sub></button></a>
-            <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
-        </div>
-
-        <% if(orders === 0) {%>
-          <h2>No orders</h2>
-        <% } else {%>
-          <% orders.forEach(function(elem){ %>
-            <div class="order">
-              <table class="ordered-products">
-                <h3>Order № <%= elem.paymentId %></h3>
-                  <tr>
-                      <th></th>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Category</th>
-                      <th>Variation</th>
-                      <th>Quantity</th>
-                  </tr>
-                  <% elem.items.forEach(function(item){ %>
-                      <tr class="product-cart" value="<%= item.productId %>" id="<%= item.variant.product_id %>">
-                          <td>
-                              <div class="img-cart">
-                                  <img src="" alt="" id="<%= item.variant.variation_values ? item.variant.variation_values.color : 'none' %>">
+      <div class="container">
+        <main class="profile">
+          <div id="profile">
+              <h3>Profile:</h3>
+              <p><b>Email:</b> <%= user.user.email %></p>
+              <p><b>Registered:</b> <%= date %></p>
+          </div>
+          <div id="cart-wish">
+              <a href="/cart"><button class="icon"><i class="fas fa-shopping-cart"></i><sub><%= cart %></sub></button></a>
+              <a href="/wishlist"><button class="icon"><i class="fas fa-clipboard-list"></i><sub><%= wishlist %></sub></button></a>
+          </div>
+  
+          <% if(orders === 0) {%>
+            <h2>No orders</h2>
+          <% } else {%>
+            <% orders.forEach(function(elem){ %>
+              <div class="order">
+                <table class="ordered-products">
+                  <h3>Order № <%= elem.paymentId %></h3>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Variation</th>
+                        <th>Quantity</th>
+                    </tr>
+                    <% elem.items.forEach(function(item){ %>
+                        <tr class="product-cart" value="<%= item.productId %>" id="<%= item.variant.product_id %>">
+                            <td>
+                                <div class="img-cart">
+                                    <img src="" alt="" id="<%= item.variant.variation_values ? item.variant.variation_values.color : 'none' %>">
+                                </div>
+                            </td>
+                            <td class="product-name"></td>
+                            <td class="price">$<%= item.variant.price %></td>
+                            <td class="primary-category-id"></td>
+                            <td class="variantions"></td>
+                            <td>
+                              <div class="quantity">
+                                <p class="product-quantity"><%= item.quantity %></p>
                               </div>
-                          </td>
-                          <td class="product-name"></td>
-                          <td class="price">$<%= item.variant.price %></td>
-                          <td class="primary-category-id"></td>
-                          <td class="variantions"></td>
-                          <td>
-                            <div class="quantity">
-                              <p class="product-quantity"><%= item.quantity %></p>
-                            </div>
-                          </td>
-                      </tr>
-                  <% }); %>
-              </table>
-            </div>
-          <% }); %>
-        <% } %>
-      </main>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </table>
+              </div>
+            <% }); %>
+          <% } %>
+        </main>
+      </div>
 
       <%- include('./footer') %>
       <script type="module" src="/javascripts/loadProducts.js"></script>

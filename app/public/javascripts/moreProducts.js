@@ -11,7 +11,7 @@ jQuery(function() {
             $('.product-elem').remove()
             $('.catalog').append(first25)
             add('.product-btn');
-            $('.catalog').append('<button class="more-products">MORE PRODUCTS</button>')
+            $('.container').append('<button class="more-products">MORE PRODUCTS</button>')
             $('.more-products').on('click', function(e){
                 $('.product-elem').remove()
                 $('.catalog').append(first25)

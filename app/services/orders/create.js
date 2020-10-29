@@ -34,6 +34,7 @@ async function create(token, body){
             data: body,
             headers
         });
+        console.log("Created order")
 
         return order.data;
     } catch(err){

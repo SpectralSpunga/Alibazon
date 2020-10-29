@@ -1,17 +1,17 @@
 const Auth = require('../services/auth/index')()
 
 function registerPage(req, res, next){
-    if(req.cookies.user.user) return res.redirect('/category/mens')
+    if(req.cookies && req.cookies.user && req.cookies.user.user) return res.redirect('/category/mens')
     return res.render('signup',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign Up" })
 }
 
 function loginPage(req, res, next){
-    if(req.cookies.user.user) return res.redirect('/category/mens')
+    if(req.cookies && req.cookies.user && req.cookies.user.user) return res.redirect('/category/mens')
     return res.render('signin',{ links: [{ap: "AUTH"}], user: 'none', title: "Sign In" })
 }
 
 async function logout(req, res, next){
-    res.cookie('user', { httpOnly: true, expires: Date.now()});
+    res.cookie('user', "none", { httpOnly: true });
     return res.redirect('/category/mens')
 }
 

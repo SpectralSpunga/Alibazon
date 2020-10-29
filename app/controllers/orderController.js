@@ -1,11 +1,12 @@
 const Orders = require('../services/orders/index')()
+const Cart = require('../services/cart/index')()
 const { STRIPE_SECRET_KEY } = require('../config').config;
 
 async function createOrder(req, res, next){
     const stripe = require('stripe')(STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve( req.cookies.session_id );
 
-    let cart = await Orders.get(req.cookies.user.token);
+    let cart = await Cart.get(req.cookies.user.token);
     let body = {
         secretKey: req.body.secretKey,
         paymentId: req.cookies.payment_id,

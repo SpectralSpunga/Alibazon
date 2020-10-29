@@ -5,54 +5,56 @@
       <%- include('./header') %>
       <%- include('./breadcrumbs') %> 
 
-      <main class="cart-wish">
-        <% if(result === 'no items') {%>
-            <h1>No items in cart</h1>
-        <% } else {%>
-        <table>
-            <thead>
-                <th></th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Variation</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </thead>
-            <tbody>
-            <% result.items.forEach(function(elem){ %>
-                <tr class="product-cart" value="<%= elem.productId %>" id="<%= elem.variant.product_id %>">
-                    <td>
-                        <div class="img-cart">
-                            <img src="" alt="" id="<%= elem.variant.variation_values ? elem.variant.variation_values.color : 'none' %>">
-                        </div>
-                    </td>
-                    <td class="product-name"></td>
-                    <td class="price">$<%= elem.variant.price %></td>
-                    <td class="primary-category-id"></td>
-                    <td class="variantions"></td>
-                    <td>
-                        <div class="quantity">
-                            <button class="minus">-</button>
-                            <p class="product-quantity"><%= elem.quantity %></p>
-                            <button class="plus">+</button>
-                          </div>
-                    </td>
-                    <td class="total"></td>
-                    <td class="trash"><i class="fas fa-trash"></i></td>
-                </tr>
-            <% }); %>
-            </tbody>
-        </table>
-        <% } %>
-
-        <div id="cart-total">
-            <h2>Your cart total:</h2>
-            <h3></h3>
-            <button id="checkout-button" type="submit">Checkout</button>
-        </div>
-      </main>
+      <div class="container">
+        <main class="cart-wish">
+            <% if(result === 'no items') {%>
+                <h1>No items in cart</h1>
+            <% } else {%>
+            <table>
+                <thead>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Variation</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                <% result.items.forEach(function(elem){ %>
+                    <tr class="product-cart" value="<%= elem.productId %>" id="<%= elem.variant.product_id %>">
+                        <td>
+                            <div class="img-cart">
+                                <img src="" alt="" id="<%= elem.variant.variation_values ? elem.variant.variation_values.color : 'none' %>">
+                            </div>
+                        </td>
+                        <td class="product-name"></td>
+                        <td class="price">$<%= elem.variant.price %></td>
+                        <td class="primary-category-id"></td>
+                        <td class="variantions"></td>
+                        <td>
+                            <div class="quantity">
+                                <button class="minus">-</button>
+                                <p class="product-quantity"><%= elem.quantity %></p>
+                                <button class="plus">+</button>
+                              </div>
+                        </td>
+                        <td class="total"></td>
+                        <td class="trash"><i class="fas fa-trash"></i></td>
+                    </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            <% } %>
+    
+            <div id="cart-total">
+                <h2>Your cart total:</h2>
+                <h3></h3>
+                <button id="checkout-button" type="submit">Checkout</button>
+            </div>
+          </main>
+      </div>
 
       <%- include('./footer') %>
       <script type="module" src="/javascripts/removeItem.js"></script>

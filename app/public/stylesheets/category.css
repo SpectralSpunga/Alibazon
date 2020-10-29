@@ -23,6 +23,7 @@
     border-radius: 3px;
     width: 90%;
     height: auto;
+    max-height: 150px;
 }
 
 .category h1{

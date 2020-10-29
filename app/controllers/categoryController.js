@@ -2,7 +2,7 @@ const Category = require('../services/category/index')()
 
 async function category(req, res, next){
     let { category, subCategory } = req.params;
-    let user = req.cookies.user.user ? req.cookies.user : "none";
+    let user = req.cookies ? req.cookies.user ? req.cookies.user : "none" : "none";
     let result = '', links = [], ap = '';
 
     if(subCategory){

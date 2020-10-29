@@ -4,42 +4,44 @@
   <body>
       <%- include('./header') %>
       <%- include('./breadcrumbs') %>
-      <main class="catalog">
+      <div class="container">
+        <main class="catalog">
 
 
-        <% products.forEach(function(elem){ %>
-            <div class="product-elem">
-                <h3><%= elem.name %></h3>
-                <div>
-                    <div class="img-div">
-                        <img src="/images/<%= elem.image_groups[0].images[0].link %>" alt="<%= elem.image_groups[0].images[0].alt %>">  
-                    </div>
-                    <div class="product-text">
-                        <p><%= elem.short_description %></p>
-                        <div class="product-btn">
-                            <p>Price: <b>$<%= elem.price %></b></p>
-                            <a href="/products/<%= elem.primary_category_id %>/<%= elem.id %>">
-                                <button class="more-info">MORE INFO</button>
-                            </a>
-                            <% if(user === "none") {%>
-                                <a href="/cart"><button>ADD TO CART</button></a>
-                                <a href="/wishlist"><button>ADD TO WISHLIST</button></a>
-                            <% } else {%>
-                                <% if(elem.variants.length < 1) {%>
-                                    <button disabled>SOLD OUT</button></a>
+            <% products.forEach(function(elem){ %>
+                <div class="product-elem">
+                    <h3><%= elem.name %></h3>
+                    <div>
+                        <div class="img-div">
+                            <img src="/images/<%= elem.image_groups[0].images[0].link %>" alt="<%= elem.image_groups[0].images[0].alt %>">  
+                        </div>
+                        <div class="product-text">
+                            <p><%= elem.short_description %></p>
+                            <div class="product-btn">
+                                <p>Price: <b>$<%= elem.price %></b></p>
+                                <a href="/products/<%= elem.primary_category_id %>/<%= elem.id %>">
+                                    <button class="more-info">MORE INFO</button>
+                                </a>
+                                <% if(user === "none") {%>
+                                    <a href="/cart"><button>ADD TO CART</button></a>
+                                    <a href="/wishlist"><button>ADD TO WISHLIST</button></a>
                                 <% } else {%>
-                                    <button class="addToCart" value="<%= elem.id %>" id="<%= elem.variants[0].product_id %>">ADD TO CART</button>
-                                    <button class="addToWishlist" value="<%= elem.id %>" id="<%= elem.variants[0].product_id %>">ADD TO WISHLIST</button>
+                                    <% if(elem.variants.length < 1) {%>
+                                        <button disabled>SOLD OUT</button></a>
+                                    <% } else {%>
+                                        <button class="addToCart" value="<%= elem.id %>" id="<%= elem.variants[0].product_id %>">ADD TO CART</button>
+                                        <button class="addToWishlist" value="<%= elem.id %>" id="<%= elem.variants[0].product_id %>">ADD TO WISHLIST</button>
+                                    <% } %>
                                 <% } %>
-                            <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        <% }); %>
-
-
-      </main>
+            <% }); %>
+    
+    
+          </main>
+      </div>
       <%- include('./footer') %>
       <script type="module" src='/javascripts/add.js'></script>
       <script type="module" src='/javascripts/moreProducts.js'></script>

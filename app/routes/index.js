@@ -1,6 +1,6 @@
 module.exports = function(app) {
     app.get('/', (req, res) => {
-        res.send('Welcome to OSF Academy Backend Starter Kit. Have Fun!')
+        res.redirect('/category/mens')
     });
 
     // You can add others app.use with other route files

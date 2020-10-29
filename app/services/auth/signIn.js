@@ -1,4 +1,10 @@
+/**
+ * pepepeppe
+ */
 const axios = require('axios');
+/**
+ * poopoo
+ */
 const { API } = require('../../config').config;
 
 /** Logins a user if he has already registered

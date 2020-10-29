@@ -1,3 +1,6 @@
+/**
+ * pooooo
+ */
 function Auth(){
     const signIn = require('./signIn');
     const signUp = require('./signUp')

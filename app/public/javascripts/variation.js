@@ -28,7 +28,7 @@ import { Req } from "./requests.js";
 
     //change style of clicked variant and check if variant is available
     $('.product-text').on('click', (e)=>{
-        if( ['color', 'width', 'size'].includes($(e.target).attr('name')) ){
+        if( ['color', 'width', 'size', 'accessorySize'].includes($(e.target).attr('name')) ){
             $(e.target).parent().children().css(no_style)
             $(e.target).parent().find('p').css({"color":"black"})
             $(e.target).parent().children().removeClass('checked')

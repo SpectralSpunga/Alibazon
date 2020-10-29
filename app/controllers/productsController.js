@@ -2,7 +2,7 @@ const Products = require('../services/products/index')()
 
 async function productsPage(req, res, next){
     let requestURL = "id=" + req.params.productID;
-    let user = req.cookies.user.user ? req.cookies.user : "none";
+    let user = req.cookies ? req.cookies.user ? req.cookies.user : "none" : "none";
     let products = await Products.dataLoader(requestURL);
     if(products instanceof Error) return res.render('NotFound');
     
@@ -25,7 +25,7 @@ async function productsPage(req, res, next){
 
 async function productsCatalog(req, res, next){
     let requestURL = `primary_category_id=${req.params.subsubCategory}`;
-    let user = req.cookies.user.user ? req.cookies.user : "none";
+    let user = req.cookies ? req.cookies.user ? req.cookies.user : "none" : "none";
     let products = await Products.dataLoader(requestURL)
     if(products instanceof Error) return res.render('NotFound', {title: "Not Found", user, links:[{link:'', ap:''}]});
 
@@ -48,7 +48,7 @@ async function productsCatalog(req, res, next){
 async function productsSearch(req, res, next){
     let products = await Products.search(req.query.q);
     if(products instanceof Error) return res.render('NotFound');
-    let user = req.cookies.user.user ? req.cookies.user : "none";
+    let user = req.cookies ? req.cookies.user ? req.cookies.user : "none" : "none";
     let links = [{ link: '', ap: `${products.length} results for: ` + req.query.q }]
     
     res.render('productsCatalog', { products, links, user, title: "Results for: " + req.query.q });

@@ -1,4 +1,10 @@
+/**
+ * pepe
+ */
 const axios = require('axios');
+/**
+ * popo
+ */
 const { API } = require('../../config').config;
 
 /** Registers a new user if there is no such user in a database
